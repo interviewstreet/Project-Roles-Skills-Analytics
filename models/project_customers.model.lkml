@@ -18,4 +18,11 @@ include: "/**/*.view.lkml"                 # include all views in this project
 #     sql_on: ${users.id} = ${orders.user_id} ;;
 #   }
 # }
-explore: project_customers {}
+explore:  ever_paid_companies_inc_tcs{
+  label: "project_customers"
+  join: dim_recruit_company_data {
+    type: inner
+    sql_on: ${ever_paid_companies_inc_tcs.company_id} = ${dim_recruit_company_data.company_data_company_id};;
+    relationship: one_to_one
+  }
+  }

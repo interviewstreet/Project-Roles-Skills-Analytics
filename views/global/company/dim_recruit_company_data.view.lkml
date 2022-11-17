@@ -57,6 +57,6 @@ view: dim_recruit_company_data {
 
   measure: count {
     type: count
-    drill_fields: []
+    drill_fields: [company_data_company_id]
   }
 }
