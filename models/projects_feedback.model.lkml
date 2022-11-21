@@ -20,7 +20,7 @@ include: "/**/*.view.lkml"                 # include all views in this project
 # }
 explore: ever_paid_companies_inc_tcs {
   label: "project_customers_all_joins"
-  always_join: [dim_recruit_company_data,recruit_tests,recruit_attempts,recruit_solves,dim_content_questions]
+  always_join: [dim_recruit_company_data,recruit_tests]
   join: dim_recruit_company_data {
     type: inner
     relationship: one_to_one
@@ -36,25 +36,5 @@ explore: ever_paid_companies_inc_tcs {
     type: left_outer
     relationship: one_to_many
     sql_on: ${recruit_tests.unique_id} = ${recruit_test_feedback.test_hash} ;;
-  }
-  join: recruit_attempts {
-    type: inner
-    relationship: one_to_many
-    sql_on: ${recruit_tests.id} = ${recruit_attempts.tid} ;;
-  }
-  join: recruit_solves {
-    type: inner
-    relationship: one_to_many
-    sql_on: ${recruit_attempts.id} = ${recruit_solves.aid} ;;
-  }
-  join: dim_content_questions {
-    type: inner
-    relationship: one_to_one
-    sql_on: ${recruit_solves.qid} = ${dim_content_questions.question_id} ;;
-  }
-  join: salesforce_accounts {
-    type: inner
-    relationship: one_to_many
-    sql_on: ${salesforce_accounts.hrid_c} = ${ever_paid_companies_inc_tcs.company_id};;
   }
 }

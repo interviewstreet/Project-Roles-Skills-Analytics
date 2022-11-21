@@ -4,6 +4,7 @@ view: dim_recruit_company_data {
   dimension: company_data_company_id {
     type: number
     sql: ${TABLE}.company_data_company_id ;;
+    drill_fields: [company_data_company_id]
   }
 
   dimension_group: company_data_created {
@@ -57,6 +58,12 @@ view: dim_recruit_company_data {
 
   measure: count {
     type: count
+    drill_fields: [company_data_company_id]
+  }
+
+  measure: company_id_count {
+    type: count_distinct
+    sql: ${company_data_company_id} ;;
     drill_fields: [company_data_company_id]
   }
 }

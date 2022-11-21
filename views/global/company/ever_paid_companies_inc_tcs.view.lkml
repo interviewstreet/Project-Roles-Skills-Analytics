@@ -107,6 +107,7 @@ view: ever_paid_companies_inc_tcs {
   dimension: company_hr_company_id {
     type: number
     sql: ${TABLE}.company_hr_company_id ;;
+    drill_fields: [company_id]
   }
 
   dimension: company_id {
@@ -296,6 +297,7 @@ view: ever_paid_companies_inc_tcs {
 
   measure: distinct_company_count {
     type: count_distinct
+    sql: ${company_id} ;;
     drill_fields: [company_name,company_id]
   }
 }

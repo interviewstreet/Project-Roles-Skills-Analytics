@@ -247,6 +247,6 @@ view: dim_content_questions {
 
   measure: count {
     type: count
-    drill_fields: [question_name]
+    drill_fields: [question_name, question_id, question_type]
   }
 }
