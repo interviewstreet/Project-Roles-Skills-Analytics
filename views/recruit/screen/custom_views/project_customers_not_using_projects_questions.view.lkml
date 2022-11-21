@@ -46,8 +46,10 @@ view: project_customers_not_using_projects_questions {
         INNER JOIN recruit.recruit_solves  AS recruit_solves ON recruit_attempts.id = recruit_solves.aid
         INNER JOIN global.dim_content_questions  AS dim_content_questions ON recruit_solves.qid = dim_content_questions.question_id
         LEFT JOIN hr_analytics.salesforce.accounts AS sa on sa.hrid_c = ever_paid_companies_inc_tcs.company_id
-        WHERE ((ever_paid_companies_inc_tcs.company_stripe_plan ) <> 'free' AND (ever_paid_companies_inc_tcs.company_stripe_plan ) <> 'locked' AND (ever_paid_companies_inc_tcs.company_stripe_plan ) <> 'trial' OR (ever_paid_companies_inc_tcs.company_stripe_plan ) IS NULL) AND (dim_recruit_company_data.company_data_key ) = 'enable_projects' AND (dim_recruit_company_data.company_data_value ) = 'true' AND
-        "ever_paid_companies_inc_tcs.company_id" not in
+        WHERE ((ever_paid_companies_inc_tcs.company_stripe_plan ) <> 'free' AND (ever_paid_companies_inc_tcs.company_stripe_plan ) <> 'locked'
+        AND (ever_paid_companies_inc_tcs.company_stripe_plan ) <> 'trial' OR (ever_paid_companies_inc_tcs.company_stripe_plan ) IS NULL)
+        AND (dim_recruit_company_data.company_data_key ) = 'enable_projects' AND (dim_recruit_company_data.company_data_value ) = 'true'
+        AND "ever_paid_companies_inc_tcs.company_id" not in
         (
         SELECT
         distinct ever_paid_companies_inc_tcs.company_id  AS "ever_paid_companies_inc_tcs.company_id"
@@ -59,7 +61,29 @@ view: project_customers_not_using_projects_questions {
         INNER JOIN global.dim_content_questions  AS dim_content_questions ON recruit_solves.qid = dim_content_questions.question_id
         WHERE ((ever_paid_companies_inc_tcs.company_stripe_plan ) <> 'free' AND (ever_paid_companies_inc_tcs.company_stripe_plan ) <> 'locked' AND (ever_paid_companies_inc_tcs.company_stripe_plan ) <> 'trial' OR (ever_paid_companies_inc_tcs.company_stripe_plan ) IS NULL) AND (dim_recruit_company_data.company_data_key ) = 'enable_projects' AND (dim_recruit_company_data.company_data_value ) = 'true' AND
         (dim_content_questions.question_type ) IN ('fullstack', 'sudorank')
+        and recruit_tests.draft=0
+        and recruit_tests.state <> 3
+        and recruit_attempts.tid > 0
+        and lower(recruit_attempts.email) not like '%@hackerrank.com%'
+        and lower(recruit_attempts.email) not like '%@hackerrank.net%'
+        and lower(recruit_attempts.email) not like '%@interviewstreet.com%'
+        and lower(recruit_attempts.email) not like '%sandbox17e2d93e4afe44ea889d89aadf6d413f.mailgun.org%'
+        and lower(recruit_attempts.email) not like '%strongqa.com%'
+        and recruit_attempts.status =  7
+        and recruit_solves.aid > 0
+        and recruit_solves.status = 2
         )
+        and recruit_tests.draft=0
+        and recruit_tests.state <> 3
+        and recruit_attempts.tid > 0
+        and lower(recruit_attempts.email) not like '%@hackerrank.com%'
+        and lower(recruit_attempts.email) not like '%@hackerrank.net%'
+        and lower(recruit_attempts.email) not like '%@interviewstreet.com%'
+        and lower(recruit_attempts.email) not like '%sandbox17e2d93e4afe44ea889d89aadf6d413f.mailgun.org%'
+        and lower(recruit_attempts.email) not like '%strongqa.com%'
+        and recruit_attempts.status =  7
+        and recruit_solves.aid > 0
+        and recruit_solves.status = 2
         group by 1,2
         order by 3 desc
         ;;

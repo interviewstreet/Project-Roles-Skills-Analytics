@@ -249,4 +249,31 @@ view: dim_content_questions {
     type: count
     drill_fields: [question_name, question_id, question_type]
   }
+
+  ## custom role type
+  dimension: question_role_type {
+    type: string
+    sql: case WHEN question_type = 'fullstack'
+                   AND json_extract_path_text(question_type_attributes, 'role_type') = 'fullstack' THEN 'Fullstack'
+              WHEN question_type = 'fullstack'
+                   AND json_extract_path_text(question_type_attributes, 'role_type') = 'mobile' THEN 'Fullstack-Mobile'
+              WHEN question_type = 'fullstack'
+                   AND json_extract_path_text(question_type_attributes, 'role_type') = 'frontend' THEN 'Fullstack-Frontend'
+              WHEN question_type = 'fullstack'
+                   AND json_extract_path_text(question_type_attributes, 'role_type') = 'backend' THEN 'Fullstack-Backend'
+              WHEN question_type = 'fullstack'
+                   AND json_extract_path_text(question_type_attributes, 'role_type') = 'datascience' THEN 'Fullstack-Datascience'
+              WHEN question_type = 'sudorank' and lower(${question_tags}) like '%aws cli%' THEN 'AWS'
+              WHEN question_type = 'sudorank' THEN 'Fullstack-Devops'
+              WHEN question_type = 'database' THEN 'Database'
+              WHEN question_type = 'fullstack'
+                   AND json_extract_path_text(question_type_attributes, 'role_type') IS NULL THEN 'Fullstack-NULL'
+              else 'Others'
+              end;;
+  }
+
+  dimension: library_question {
+    type: string
+    sql: case when ${question_company_id} = 14357 then 'yes' else 'no' end;;
+  }
 }

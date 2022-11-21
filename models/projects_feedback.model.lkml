@@ -30,6 +30,8 @@ explore: ever_paid_companies_inc_tcs {
     type: inner
     relationship: one_to_many
     sql_on: ${ever_paid_companies_inc_tcs.company_id} = ${recruit_tests.company_id} ;;
+    sql_where: : ${recruit_tests.draft} = 0
+    and ${recruit_tests.state} <> 3 ;;
 
   }
   join: recruit_test_feedback {

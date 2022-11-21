@@ -30,6 +30,8 @@ explore: ever_paid_companies_inc_tcs {
     type: inner
     relationship: one_to_many
     sql_on: ${ever_paid_companies_inc_tcs.company_id} = ${recruit_tests.company_id} ;;
+    sql_where: ${recruit_tests.draft} = 0
+    and ${recruit_tests.state} <> 3 ;;
 
   }
   join: recruit_test_feedback {
@@ -41,11 +43,20 @@ explore: ever_paid_companies_inc_tcs {
     type: inner
     relationship: one_to_many
     sql_on: ${recruit_tests.id} = ${recruit_attempts.tid} ;;
+    sql_where: ${recruit_attempts.tid} > 0
+    and lower(${recruit_attempts.email}) not like '%@hackerrank.com%'
+    and lower(${recruit_attempts.email}) not like '%@hackerrank.net%'
+    and lower(${recruit_attempts.email}) not like '%@interviewstreet.com%'
+    and lower(${recruit_attempts.email}) not like '%sandbox17e2d93e4afe44ea889d89aadf6d413f.mailgun.org%'
+    and lower(${recruit_attempts.email}) not like '%strongqa.com%'
+    and ${recruit_attempts.status} =  7 ;;
   }
   join: recruit_solves {
     type: inner
     relationship: one_to_many
     sql_on: ${recruit_attempts.id} = ${recruit_solves.aid} ;;
+    sql_where: ${recruit_solves.aid} > 0
+    and ${recruit_solves.status} = 2 ;;
   }
   join: dim_content_questions {
     type: inner
