@@ -34,6 +34,11 @@ explore: ever_paid_companies_inc_tcs {
     and ${recruit_tests.state} <> 3 ;;
 
   }
+  join: roles_tests_tagging {
+    type: left_outer
+    relationship: one_to_one
+    sql_on: ${roles_tests_tagging.test_id} = ${recruit_tests.id} ;;
+  }
   join: recruit_test_feedback {
     type: left_outer
     relationship: one_to_many
