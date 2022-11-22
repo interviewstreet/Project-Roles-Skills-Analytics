@@ -1,13 +1,13 @@
 view: roles_tests_tagging {
   derived_table: {
-    sql: select frr.role_name ,frr.role_company_id, atm.additional_tag_mapping_entity_id as test_id
+    sql: select frr.role_name ,frr.role_company_id, atm.eid as test_id
             from
             global.fact_rs_roles frr
-            inner join global.fact_recruit_additional_tag at on frr.role_unique_id = at.additional_tag_tag
-            and at.additional_tag_tag_type = 4
-            and at.additional_tag_taggable_type = 'Recruit::Test'
+            inner join recruit.recruit_additional_tags at on frr.role_unique_id = at."tag"
+            and at.tag_type = 4
+            and at.taggable_type = 'Recruit::Test'
             and frr.role_standard = 1
-            inner join global.fact_recruit_additional_tag_mapping atm on atm.additional_tag_mapping_tag_id = at.additional_tag_id
+            inner join recruit.recruit_additional_tag_mappings atm on atm.tag_id = at.id
  ;;
   }
 
