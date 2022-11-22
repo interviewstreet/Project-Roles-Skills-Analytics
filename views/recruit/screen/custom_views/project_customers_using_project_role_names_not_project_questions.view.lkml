@@ -44,8 +44,10 @@ view: project_customers_using_project_role_names_not_project_questions {
       left join
       hr_analytics.salesforce.accounts sa on sa.hrid_c = rc.company_id
       where
-      role_standard = 0
-      and (lower(role_name) like '%develop%' or lower(role_name) like '%scient%' or lower(role_name) like '%analyst%' or lower(role_name) like '%analy%' or lower(role_name) like '%engineer%'or lower(role_name) like '%front%' or lower(role_name) like '%back%')
+      --role_standard = 0
+      --and
+      (lower(role_name) like '%develop%' or lower(role_name) like '%scient%' or lower(role_name) like '%analyst%' or lower(role_name) like '%sde%'
+      or lower(role_name) like '%analy%' or lower(role_name) like '%engineer%'or lower(role_name) like '%front%' or lower(role_name) like '%back%')
       and role_company_id in (
       SELECT
       distinct ever_paid_companies_inc_tcs.company_id  AS "ever_paid_companies_inc_tcs.company_id"
