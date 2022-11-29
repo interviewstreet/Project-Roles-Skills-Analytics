@@ -36,11 +36,18 @@ view: project_customers_using_project_role_names_not_project_questions {
       and rc.company_id not in (106529,46242) --- exclude internal test setters
       )
 
-      select role_name, role_company_id , rc.company_name, max(sa.arr_c::decimal) as arr
+      select role_name, recruit_tests.company_id , rc.company_name, max(sa.arr_c::decimal) as arr
       from global.fact_rs_roles frs
+
+      inner join recruit.recruit_additional_tags at on frs.role_unique_id = at."tag"
+      and at.tag_type = 4
+      and at.taggable_type = 'Recruit::Test'
+      --and frs.role_standard = 1
+      inner join recruit.recruit_additional_tag_mappings atm on atm.tag_id = at.id
+      INNER JOIN recruit.recruit_tests  AS recruit_tests ON atm.eid = recruit_tests.id
       inner join
       global.dim_recruit_company rc
-      on rc. company_id = frs.role_company_id
+      on rc.company_id = recruit_tests.company_id
       left join
       hr_analytics.salesforce.accounts sa on sa.hrid_c = rc.company_id
       where
@@ -48,7 +55,7 @@ view: project_customers_using_project_role_names_not_project_questions {
       --and
       (lower(role_name) like '%develop%' or lower(role_name) like '%scient%' or lower(role_name) like '%analyst%' or lower(role_name) like '%sde%'
       or lower(role_name) like '%analy%' or lower(role_name) like '%engineer%'or lower(role_name) like '%front%' or lower(role_name) like '%back%')
-      and role_company_id in (
+      and recruit_tests.company_id in (
       SELECT
       distinct ever_paid_companies_inc_tcs.company_id  AS "ever_paid_companies_inc_tcs.company_id"
       FROM ever_paid_companies_inc_tcs
@@ -112,9 +119,9 @@ view: project_customers_using_project_role_names_not_project_questions {
     sql: ${TABLE}.role_name ;;
   }
 
-  dimension: role_company_id {
+  dimension: company_id {
     type: number
-    sql: ${TABLE}.role_company_id ;;
+    sql: ${TABLE}.company_id ;;
   }
 
   dimension: company_name {
@@ -128,6 +135,6 @@ view: project_customers_using_project_role_names_not_project_questions {
   }
 
   set: detail {
-    fields: [role_name, role_company_id, company_name, arr]
+    fields: [role_name, company_id, company_name, arr]
   }
 }
