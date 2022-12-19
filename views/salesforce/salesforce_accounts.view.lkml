@@ -1,7 +1,8 @@
 view: salesforce_accounts {
     derived_table: {
-      sql: select hrid_c, region_c, number_of_employees
-              from hr_analytics.salesforce.accounts;;
+      sql: select hrid_c, max(region_c) as region_c, max(number_of_employees) as number_of_employees,max(arr_c::decimal) as arr
+              from hr_analytics.salesforce.accounts
+              group by 1;;
     }
 
     measure: count {
@@ -24,7 +25,12 @@ view: salesforce_accounts {
       sql: ${TABLE}.number_of_employees ;;
     }
 
+  dimension: arr {
+    type: number
+    sql: ${TABLE}.arr ;;
+  }
+
     set: detail {
-      fields: [hrid_c, region_c, number_of_employees]
+      fields: [hrid_c, region_c, number_of_employees,arr]
     }
   }
