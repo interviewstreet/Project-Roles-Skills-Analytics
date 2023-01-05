@@ -126,6 +126,11 @@ view: recruit_attempts {
     sql: ${TABLE}.tid ;;
   }
 
+  dimension: attempt_duration {
+    type: number
+    sql: datediff('minutes',${TABLE}.starttime,${TABLE}.endtime) ;;
+  }
+
   dimension_group: updated {
     type: time
     timeframes: [
