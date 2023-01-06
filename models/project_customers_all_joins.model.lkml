@@ -44,6 +44,11 @@ explore: ever_paid_companies_inc_tcs {
     relationship: one_to_many
     sql_on: ${recruit_tests.unique_id} = ${recruit_test_feedback.test_hash} ;;
   }
+  join: recruit_test_candidates {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${recruit_test_candidates.test_id} = ${recruit_tests.id} ;;
+  }
   join: recruit_attempts {
     type: inner
     relationship: one_to_many
