@@ -65,6 +65,11 @@ explore: ever_paid_companies_inc_tcs {
           and lower(${recruit_attempts.email}) not like '%strongqa.com%'
           and ${recruit_attempts.status} =  7 ;;
   }
+  join: recruit_attempt_data {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${recruit_attempt_data.aid} = ${recruit_attempts.id} ;;
+  }
   join: recruit_solves {
     type: inner
     relationship: one_to_many
