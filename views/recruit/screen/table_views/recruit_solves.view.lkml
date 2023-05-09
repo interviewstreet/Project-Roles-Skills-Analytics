@@ -24,6 +24,24 @@ view: recruit_solves {
     sql: ${TABLE}.bonusscore ;;
   }
 
+  dimension: language_solved {
+    type: string
+    sql: case WHEN  json_extract_path_text(${metadata}, 'language') = 'java' THEN 'Java'
+              WHEN  json_extract_path_text(${metadata}, 'language') = 'java15' THEN 'Java'
+              WHEN  json_extract_path_text(${metadata}, 'language') = 'java8' THEN 'Java'
+              WHEN  json_extract_path_text(${metadata}, 'language') = 'pypy' THEN 'Python'
+              WHEN  json_extract_path_text(${metadata}, 'language') = 'pypy3' THEN 'Python'
+              WHEN  json_extract_path_text(${metadata}, 'language') = 'python' THEN 'Python'
+              WHEN  json_extract_path_text(${metadata}, 'language') = 'python3' THEN 'Python'
+              WHEN  json_extract_path_text(${metadata}, 'language') = 'cpp' THEN 'C++'
+              WHEN  json_extract_path_text(${metadata}, 'language') = 'cpp14' THEN 'C++'
+              WHEN  json_extract_path_text(${metadata}, 'language') = 'cpp20' THEN 'C++'
+              WHEN  json_extract_path_text(${metadata}, 'language') = 'csharp' THEN 'Csharp/.NET'
+              else 'Others'
+              end;;
+
+  }
+
   dimension: frames {
     type: string
     sql: ${TABLE}.frames ;;
@@ -62,6 +80,25 @@ view: recruit_solves {
   dimension: score {
     type: number
     sql: ${TABLE}.score ;;
+  }
+
+  dimension: max_score {
+    type: number
+    sql: json_extract_path_text(${TABLE}.metadata,'max_score',true);;
+  }
+
+  dimension: percentage {
+    type: number
+    sql: ${score}*100.0/cast(${max_score}*1.0 as DOUBLE PRECISION);;
+  }
+
+  dimension: Score_Bucket {
+    type: string
+    sql: case
+          when ${percentage} >=0 and ${percentage} <=50 then '0-50'
+          when ${percentage} >50 and ${percentage} <=75 then '50-75'
+          when ${percentage} >75 and ${percentage} <=90 then '75-90'
+          else '90-100' end;;
   }
 
   dimension: status {

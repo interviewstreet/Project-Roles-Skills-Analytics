@@ -126,6 +126,14 @@ view: dim_content_questions {
     sql: ${TABLE}.question_name ;;
   }
 
+  dimension: question_proficiency {
+    type: string
+    sql: case when lower(${TABLE}.question_tags) like '%easy%' then 'easy'
+      when lower(${TABLE}.question_tags) like '%medium%' then 'medium'
+      when lower(${TABLE}.question_tags) like '%hard%' then 'hard'
+      else 'not mentioned' end;;
+  }
+
   dimension: question_parent_id {
     type: number
     sql: ${TABLE}.question_parent_id ;;
@@ -270,6 +278,11 @@ view: dim_content_questions {
                    AND json_extract_path_text(question_type_attributes, 'role_type') IS NULL THEN 'Fullstack-NULL'
               else 'Others'
               end;;
+  }
+
+  dimension: question_stack_sub_type {
+    type: string
+    sql: json_extract_path_text(question_type_attributes, 'sub_type',true) ;;
   }
 
   dimension: library_question {
