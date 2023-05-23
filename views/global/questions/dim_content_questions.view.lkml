@@ -285,6 +285,22 @@ view: dim_content_questions {
     sql: json_extract_path_text(question_type_attributes, 'sub_type',true) ;;
   }
 
+
+  dimension: question_run_command  {
+    type: string
+    sql: json_extract_path_text(question_stack, 'ide_config','menu','run','command',true) ;;
+  }
+
+  dimension: question_install_command  {
+    type: string
+    sql: json_extract_path_text(question_stack, 'ide_config','menu','install','command',true) ;;
+  }
+
+  dimension: question_test_command  {
+    type: string
+    sql: json_extract_path_text(question_stack, 'ide_config','menu','test','command',true) ;;
+  }
+
   dimension: library_question {
     type: string
     sql: case when ${question_company_id} = 14357 then 'yes' else 'no' end;;
