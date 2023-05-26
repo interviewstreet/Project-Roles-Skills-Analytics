@@ -21,19 +21,27 @@ include: "/**/*.view.lkml"                 # include all views in this project
 explore: ever_paid_companies_inc_tcs {
   label: "all_joins_without_always_join"
   #always_join: [dim_recruit_company_data,recruit_tests,recruit_attempts,recruit_solves,dim_content_questions]
+
   join: dim_recruit_company_data {
     type: inner
     relationship: one_to_one
     sql_on: ${ever_paid_companies_inc_tcs.company_id} = ${dim_recruit_company_data.company_data_company_id} ;;
   }
+
   join: recruit_tests {
     type: inner
     relationship: one_to_many
     sql_on: ${ever_paid_companies_inc_tcs.company_id} = ${recruit_tests.company_id} ;;
     sql_where: ${recruit_tests.draft} = 0
       and ${recruit_tests.state} <> 3 ;;
-
   }
+
+  join: recruit_tests_questions {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${recruit_tests.id} = ${recruit_tests_questions.test_id} ;;
+  }
+
   join: roles_tests_tagging {
     type: left_outer
     relationship: one_to_one
@@ -42,8 +50,7 @@ explore: ever_paid_companies_inc_tcs {
   join: recruit_test_feedback {
     type: left_outer
     relationship: one_to_many
-    sql_on: ${recruit_tests.unique_id} = ${recruit_test_feedback.test_hash}
-    and ${recruit_test_feedback.user_email} = ${recruit_attempts.email};;
+    sql_on: ${recruit_tests.unique_id} = ${recruit_test_feedback.test_hash} ;;
   }
   join: recruit_test_candidates {
     type: left_outer
