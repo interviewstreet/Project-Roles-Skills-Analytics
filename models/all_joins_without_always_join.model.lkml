@@ -36,10 +36,46 @@ explore: ever_paid_companies_inc_tcs {
       and ${recruit_tests.state} <> 3 ;;
   }
 
+  join: fact_recruit_additonal_tag_mapping {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${fact_recruit_additonal_tag_mapping.additional_tag_mapping_entity_id} = ${recruit_tests.id};;
+  }
+
+  join: fact_recruit_additonal_tag {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${fact_recruit_additonal_tag.additional_tag_id} = ${fact_recruit_additonal_tag_mapping.additional_tag_mapping_tag_id};;
+  }
+
+  join: fact_rs_roles {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${fact_rs_roles.role_unique_id} = ${fact_recruit_additonal_tag.additional_tag_usage};;
+  }
+
+  join: fact_rs_role_skill_associations {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${fact_rs_role_skill_associations.role_skill_association_role_id} = ${fact_rs_roles.role_id};;
+    }
+
+  join: fact_rs_skills {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${fact_rs_skills.skill_id} = ${fact_rs_role_skill_associations.role_skill_association_skill_id};;
+    }
+
   join: recruit_tests_questions {
     type: inner
     relationship: one_to_many
     sql_on: ${recruit_tests.id} = ${recruit_tests_questions.test_id} ;;
+  }
+
+  join: question_skill_mapping {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${recruit_tests_questions.question_id} = ${question_skill_mapping.question_id};;
   }
 
   join: roles_tests_tagging {
@@ -81,11 +117,11 @@ explore: ever_paid_companies_inc_tcs {
     relationship: one_to_one
     sql_on: ${recruit_solves.qid} = ${dim_content_questions.question_id} ;;
   }
-  join: questions_skills_tagging {
-    type: inner
-    relationship: one_to_many
-    sql_on: ${dim_content_questions.question_id} = ${questions_skills_tagging.id} ;;
-  }
+  # join: questions_skills_tagging {
+  #   type: inner
+  #   relationship: one_to_many
+  #   sql_on: ${dim_content_questions.question_id} = ${questions_skills_tagging.id} ;;
+  # }
   join: salesforce_accounts {
     type: inner
     relationship: one_to_many
