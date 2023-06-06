@@ -25,8 +25,8 @@ view: question_skill_mapping {
                 )
 
         SELECT
-        range_sequence.i as i,
-        questions.id as question_id,
+        range_sequence.i,
+        questions.id,
         skills,
         no_of_skills,
         JSON_EXTRACT_PATH_TEXT(JSON_EXTRACT_ARRAY_ELEMENT_TEXT(questions.skills,range_sequence.i, true),'name', true) as skill_name,
@@ -46,7 +46,7 @@ view: question_skill_mapping {
       sql: ${TABLE}.i ;;
     }
 
-    dimension: question_id {
+    dimension: id {
       type: number
       sql: ${TABLE}.id ;;
     }
@@ -74,7 +74,7 @@ view: question_skill_mapping {
     set: detail {
       fields: [
         i,
-        question_id,
+        id,
         skills,
         no_of_skills,
         skill_name,

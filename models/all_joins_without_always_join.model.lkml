@@ -75,7 +75,7 @@ explore: ever_paid_companies_inc_tcs {
   join: question_skill_mapping {
     type: inner
     relationship: one_to_many
-    sql_on: ${recruit_tests_questions.question_id} = ${question_skill_mapping.question_id};;
+    sql_on: ${recruit_tests_questions.question_id} = ${question_skill_mapping.id};;
   }
 
   join: roles_tests_tagging {
