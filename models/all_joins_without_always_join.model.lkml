@@ -31,7 +31,7 @@ explore: ever_paid_companies_inc_tcs {
   join: recruit_tests {
     type: inner
     relationship: one_to_many
-    sql_on: ${ever_paid_companies_inc_tcs.company_id} = ${recruit_tests.company_id} ;;
+    sql_on: ${ever_paid_companies_inc_tcs.company_id} = abs(${recruit_tests.company_id}) ;;
     sql_where: ${recruit_tests.draft} = 0
       and ${recruit_tests.state} <> 3 ;;
   }
@@ -96,7 +96,7 @@ explore: ever_paid_companies_inc_tcs {
   join: recruit_attempts {
     type: inner
     relationship: one_to_many
-    sql_on: ${recruit_tests.id} = ${recruit_attempts.tid} ;;
+    sql_on: ${recruit_tests.id} = abs(${recruit_attempts.tid}) ;;
     sql_where: ${recruit_attempts.tid} > 0
           and lower(${recruit_attempts.email}) not like '%@hackerrank.com%'
           and lower(${recruit_attempts.email}) not like '%@hackerrank.net%'

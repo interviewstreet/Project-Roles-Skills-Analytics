@@ -24,16 +24,22 @@ view: question_skill_mapping {
                 SELECT 12
                 )
 
-        SELECT
-        range_sequence.i,
-        questions.id,
-        skills,
-        no_of_skills,
-        JSON_EXTRACT_PATH_TEXT(JSON_EXTRACT_ARRAY_ELEMENT_TEXT(questions.skills,range_sequence.i, true),'name', true) as skill_name,
-        JSON_EXTRACT_PATH_TEXT(JSON_EXTRACT_ARRAY_ELEMENT_TEXT(questions.skills,range_sequence.i, true),'unique_id', true) as skill_unique_id
-        from questions,range_sequence
-        where skill_name <> ''
-        ;;
+
+      SELECT
+      range_sequence.i,
+      questions.id,
+      skills,
+      no_of_skills,
+      JSON_EXTRACT_PATH_TEXT(JSON_EXTRACT_ARRAY_ELEMENT_TEXT(questions.skills,range_sequence.i, true),'name', true) as skill_name,
+      JSON_EXTRACT_PATH_TEXT(JSON_EXTRACT_ARRAY_ELEMENT_TEXT(questions.skills,range_sequence.i, true),'unique_id', true) as skill_unique_id,
+      case when json_extract_path_text(json_extract_array_element_text(skills,i, true),'name', true) like '% (Basic)%' then rtrim(json_extract_path_text(json_extract_array_element_text(skills,i, true),'name', true), '(Basic)')
+      when json_extract_path_text(json_extract_array_element_text(skills,i, true),'name', true) like '% (Advanced)%' then rtrim(json_extract_path_text(json_extract_array_element_text(skills,i, true),'name', true), '(Advanced)')
+      when json_extract_path_text(json_extract_array_element_text(skills,i, true),'name', true) like '% (Intermediate)%' then rtrim(json_extract_path_text(json_extract_array_element_text(skills,i, true),'name', true), '(Intermediate)')
+      else json_extract_path_text(json_extract_array_element_text(skills,i, true),'name', true) end as modified_skill_name
+
+      from questions,range_sequence
+      where skill_name <> ''
+      ;;
     }
 
     measure: count {
@@ -66,6 +72,11 @@ view: question_skill_mapping {
       sql: ${TABLE}.skill_name ;;
     }
 
+  dimension: modified_skill_name {
+    type: string
+    sql: ${TABLE}.modified_skill_name ;;
+  }
+
     dimension: skill_unique_id {
       type: string
       sql: ${TABLE}.skill_unique_id ;;
@@ -78,7 +89,8 @@ view: question_skill_mapping {
         skills,
         no_of_skills,
         skill_name,
-        skill_unique_id
+        skill_unique_id,
+        modified_skill_name
       ]
     }
   }
