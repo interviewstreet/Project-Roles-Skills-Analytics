@@ -96,7 +96,7 @@ explore: ever_paid_companies_inc_tcs {
   join: recruit_attempts {
     type: inner
     relationship: one_to_many
-    sql_on: ${recruit_tests.id} = abs(${recruit_attempts.tid}) ;;
+    sql_on: abs(${recruit_tests.id}) = abs(${recruit_attempts.tid}) ;;
     sql_where: ${recruit_attempts.tid} > 0
           and lower(${recruit_attempts.email}) not like '%@hackerrank.com%'
           and lower(${recruit_attempts.email}) not like '%@hackerrank.net%'
