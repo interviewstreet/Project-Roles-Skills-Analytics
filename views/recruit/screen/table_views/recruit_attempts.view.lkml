@@ -91,6 +91,11 @@ view: recruit_attempts {
     sql: ${TABLE}.scaled_percentage_score ;;
   }
 
+  dimension: percentage_score {
+    type: number
+    sql: ${TABLE}.scaled_percentage_score/100 ;;
+  }
+
   dimension: score {
     type: number
     sql: ${TABLE}.score ;;

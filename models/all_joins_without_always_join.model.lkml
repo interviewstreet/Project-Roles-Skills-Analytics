@@ -36,6 +36,12 @@ explore: ever_paid_companies_inc_tcs {
       and ${recruit_tests.state} <> 3 ;;
   }
 
+  join: test_user_owner {
+    type: inner
+    relationship: one_to_one
+    sql_on: ${test_user_owner.id} = abs(${recruit_tests.owner}) ;;
+  }
+
   join: fact_recruit_additonal_tag_mapping {
     type: inner
     relationship: one_to_many
@@ -91,7 +97,8 @@ explore: ever_paid_companies_inc_tcs {
   join: recruit_test_candidates {
     type: left_outer
     relationship: one_to_many
-    sql_on: ${recruit_test_candidates.test_id} = ${recruit_tests.id} ;;
+    sql_on: ${recruit_test_candidates.test_id} = ${recruit_tests.id}
+    and ${recruit_test_candidates.attempt_id} = ${recruit_attempts.id};;
   }
   join: recruit_attempts {
     type: inner
