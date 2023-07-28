@@ -42,14 +42,14 @@ view: candidate_insights {
       recruit_attempts.full_name  AS "recruit_attempts.full_name",
       recruit_attempts.scaled_percentage_score  AS "recruit_attempts.scaled_percentage_score",
       recruit_attempts.email  AS "recruit_attempts.email",
-      recruit_attempt_data.aid  AS "recruit_attempt_data.aid",
+      recruit_attempts.id  AS "recruit_attempts.id",
       recruit_tests.id as "recruit_tests.id",
-      max(case when recruit_attempt_data.key = 'gender' then recruit_attempt_data.value end) as Gender,
-      max(case when recruit_attempt_data.key = 'gpa' then recruit_attempt_data.value end) as Gpa,
-      max(case when recruit_attempt_data.key = 'univ' then recruit_attempt_data.value end) as Univ,
-      max(case when recruit_attempt_data.key = 'major' then recruit_attempt_data.value end) as Major,
-      max(case when recruit_attempt_data.key = 'year_of_graduation' then recruit_attempt_data.value end) as Year_of_graduation,
-      max(case when recruit_attempt_data.key = 'coding_details' then recruit_attempt_data.value end) as Coding_details
+      case when recruit_attempt_data.key = 'gender' then recruit_attempt_data.value end as Gender,
+      case when recruit_attempt_data.key = 'gpa' then recruit_attempt_data.value end as Gpa,
+      case when recruit_attempt_data.key = 'univ' then recruit_attempt_data.value end as Univ,
+      case when recruit_attempt_data.key = 'major' then recruit_attempt_data.value end as Major,
+      case when recruit_attempt_data.key = 'year_of_graduation' then recruit_attempt_data.value end as Year_of_graduation,
+      case when recruit_attempt_data.key = 'coding_details' then recruit_attempt_data.value end as Coding_details
 
 
       FROM ever_paid_companies_inc_tcs
