@@ -71,8 +71,7 @@ view: candidate_insights {
       4,
       5
       ORDER BY
-      2 DESC
-      LIMIT 50 ;;
+      2 DESC;;
   }
 
   measure: count {
