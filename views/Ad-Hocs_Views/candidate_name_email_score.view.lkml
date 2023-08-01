@@ -45,12 +45,17 @@ view: candidate_name_email_score {
       ru.firstname as firstname,
       ru.lastname as lastname,
       recruit_attempts.email  AS email,
+      ru1.email as user_email,
       recruit_attempts.scaled_percentage_score/100  AS score_percentage
       FROM ever_paid_companies_inc_tcs
       INNER JOIN recruit.recruit_tests  AS recruit_tests ON ever_paid_companies_inc_tcs.company_id = abs(recruit_tests.company_id)
       INNER JOIN recruit.recruit_attempts  AS recruit_attempts ON abs(recruit_tests.id) = abs(recruit_attempts.tid)
-      inner join recruit.recruit_users ru
+      left join recruit.recruit_users ru
       on ru.email = recruit_attempts.email
+      left join recruit.recruit_test_candidates rtc
+      on rtc.attempt_id = recruit_attempts.id
+      left join recruit.recruit_users ru1
+      on ru1.id = rtc.user_id
       WHERE (recruit_tests.draft = 0
       and recruit_tests.state <> 3  AND recruit_attempts.tid > 0
       and lower(recruit_attempts.email) not like '%@hackerrank.com%'
@@ -96,6 +101,11 @@ view: candidate_name_email_score {
     sql: ${TABLE}.email ;;
   }
 
+  dimension: user_email {
+    type: string
+    sql: ${TABLE}.user_email ;;
+  }
+
   dimension: score_percentage {
     type: number
     sql: ${TABLE}.score_percentage ;;
@@ -106,6 +116,7 @@ view: candidate_name_email_score {
       test_id,
       attempt_id,
       email,
+      user_email,
       score_percentage
     ]
   }
