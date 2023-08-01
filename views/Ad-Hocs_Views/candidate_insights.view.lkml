@@ -51,7 +51,7 @@ view: candidate_insights {
      -- case when recruit_attempt_data.key = 'univ' then recruit_attempt_data.value end as Univ,
      -- case when recruit_attempt_data.key = 'major' then recruit_attempt_data.value end as Major,
      -- case when recruit_attempt_data.key = 'year_of_graduation' then recruit_attempt_data.value end as Year_of_graduation,
-      case when recruit_attempt_data.key = 'recruiters_name' then recruit_attempt_data.value end as recruiters_name
+      max(case when recruit_attempt_data.key = 'recruiters_name' then recruit_attempt_data.value end) as recruiters_name
 
       FROM ever_paid_companies_inc_tcs
       INNER JOIN recruit.recruit_tests  AS recruit_tests ON ever_paid_companies_inc_tcs.company_id = abs(recruit_tests.company_id)
@@ -68,7 +68,9 @@ view: candidate_insights {
       and lower(recruit_attempts.email) not like '%@interviewstreet.com%'
       and lower(recruit_attempts.email) not like '%sandbox17e2d93e4afe44ea889d89aadf6d413f.mailgun.org%'
       and lower(recruit_attempts.email) not like '%strongqa.com%'
-      and recruit_attempts.status =  7 );;
+      and recruit_attempts.status =  7 )
+      group by
+      1,2,3,4;;
   }
 
   measure: count {
