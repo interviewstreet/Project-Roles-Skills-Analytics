@@ -26,19 +26,25 @@ view: recruit_solves {
 
   dimension: language_solved {
     type: string
-    sql: case WHEN  json_extract_path_text(${metadata}, 'language') = 'java' THEN 'Java'
-              WHEN  json_extract_path_text(${metadata}, 'language') = 'java15' THEN 'Java'
-              WHEN  json_extract_path_text(${metadata}, 'language') = 'java8' THEN 'Java'
-              WHEN  json_extract_path_text(${metadata}, 'language') = 'pypy' THEN 'Python'
-              WHEN  json_extract_path_text(${metadata}, 'language') = 'pypy3' THEN 'Python'
-              WHEN  json_extract_path_text(${metadata}, 'language') = 'python' THEN 'Python'
-              WHEN  json_extract_path_text(${metadata}, 'language') = 'python3' THEN 'Python'
-              WHEN  json_extract_path_text(${metadata}, 'language') = 'cpp' THEN 'C++'
-              WHEN  json_extract_path_text(${metadata}, 'language') = 'cpp14' THEN 'C++'
-              WHEN  json_extract_path_text(${metadata}, 'language') = 'cpp20' THEN 'C++'
-              WHEN  json_extract_path_text(${metadata}, 'language') = 'csharp' THEN 'Csharp/.NET'
-              else 'Others'
+    sql: case WHEN  json_extract_path_text(${metadata}, 'language',true) = 'java' THEN 'Java'
+              WHEN  json_extract_path_text(${metadata}, 'language',true) = 'java15' THEN 'Java'
+              WHEN  json_extract_path_text(${metadata}, 'language',true) = 'java8' THEN 'Java'
+              WHEN  json_extract_path_text(${metadata}, 'language',true) = 'pypy' THEN 'Python'
+              WHEN  json_extract_path_text(${metadata}, 'language',true) = 'pypy3' THEN 'Python'
+              WHEN  json_extract_path_text(${metadata}, 'language',true) = 'python' THEN 'Python'
+              WHEN  json_extract_path_text(${metadata}, 'language',true) = 'python3' THEN 'Python'
+              WHEN  json_extract_path_text(${metadata}, 'language',true) = 'cpp' THEN 'C++'
+              WHEN  json_extract_path_text(${metadata}, 'language',true) = 'cpp14' THEN 'C++'
+              WHEN  json_extract_path_text(${metadata}, 'language',true) = 'cpp20' THEN 'C++'
+              WHEN  json_extract_path_text(${metadata}, 'language',true) = 'csharp' THEN 'Csharp/.NET'
+              else json_extract_path_text(${metadata}, 'language',true)
               end;;
+
+  }
+
+  dimension: language_solved_in {
+    type: string
+    sql: json_extract_path_text(${metadata}, 'language',true);;
 
   }
 
@@ -89,7 +95,9 @@ view: recruit_solves {
 
   dimension: percentage {
     type: number
-    sql: ${score}*100.0/cast(${max_score}*1.0 as DOUBLE PRECISION);;
+    sql: case when ${score}>0 then ${score}*100.0/cast(${max_score}*1.0 as DOUBLE PRECISION)
+    else 0
+    end;;
   }
 
   dimension: Score_Bucket {

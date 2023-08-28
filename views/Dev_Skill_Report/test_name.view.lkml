@@ -114,6 +114,8 @@ view: test_name {
                or lower(rt.name) like '%artificial%'
                or lower(rt.name) like '%linux%'
                or lower(rt.name) like '%bash%'
+                   or lower(rt.name) like '%prompt engineer%'
+                   or lower(rt.name) like '%llm%'
                )
       inner join recruit_rs_replica.recruit.recruit_attempts ra
           on rt.id = ra.tid

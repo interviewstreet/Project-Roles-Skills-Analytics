@@ -21,7 +21,7 @@ include: "/**/*.view.lkml"                 # include all views in this project
 explore: ever_paid_companies_inc_tcs {
   label: "all_joins_without_always_join"
   #always_join: [dim_recruit_company_data,recruit_tests,recruit_attempts,recruit_solves,dim_content_questions]
-
+case_sensitive: no
   join: dim_recruit_company_data {
     type: inner
     relationship: one_to_one
@@ -100,6 +100,8 @@ explore: ever_paid_companies_inc_tcs {
     sql_on: ${recruit_test_candidates.test_id} = ${recruit_tests.id}
     and ${recruit_test_candidates.attempt_id} = ${recruit_attempts.id};;
   }
+
+
   join: recruit_attempts {
     type: inner
     relationship: one_to_many
