@@ -36,6 +36,12 @@ case_sensitive: no
       and ${recruit_tests.state} <> 3 ;;
   }
 
+  join: recruit_tests_data {
+    type: inner
+    relationship: one_to_many
+    sql: ${recruit_tests.id} = ${recruit_tests_data.tid} ;;
+  }
+
   join: test_user_owner {
     type: inner
     relationship: one_to_one
