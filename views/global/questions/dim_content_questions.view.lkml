@@ -21,6 +21,11 @@ view: dim_content_questions {
     sql: ${TABLE}.question_author ;;
   }
 
+  dimension: author_id {
+    type: string
+    sql: json_extract_path_text(${TABLE}.question_author, 'id',true) ;;
+  }
+
   dimension: question_company_id {
     type: string
     sql: ${TABLE}.question_company_id ;;
