@@ -39,7 +39,7 @@ case_sensitive: no
   join: recruit_tests_data {
     type: inner
     relationship: one_to_many
-    sql: ${recruit_tests.id} = ${recruit_tests_data.tid} ;;
+    sql_on: ${recruit_tests.id} = ${recruit_tests_data.tid} ;;
   }
 
   join: test_user_owner {
