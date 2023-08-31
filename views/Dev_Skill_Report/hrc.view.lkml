@@ -28,7 +28,7 @@ view: hrc{
 
 
   dimension: year {
-    type: string
+    type: date
     sql: ${TABLE}.year ;;
   }
 
