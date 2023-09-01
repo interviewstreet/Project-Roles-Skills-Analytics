@@ -44,10 +44,27 @@ case_sensitive: no
 
   join: test_user_owner {
     type: inner
-    relationship: one_to_one
+    relationship: one_to_many
     sql_on: ${test_user_owner.id} = abs(${recruit_tests.owner}) ;;
   }
 
+  join: test_user_invited_by {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${test_user_invited_by.id} = abs(${recruit_test_candidates.user_id}) ;;
+  }
+
+  join: recruit_user_team_mappings {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${recruit_user_team_mappings.user_id} = abs(${recruit_test_candidates.user_id}) ;;
+  }
+
+join: recruit_teams {
+  type: inner
+  relationship: one_to_many
+  sql_on: ${recruit_teams.id} =  ${recruit_user_team_mappings.team_id};;
+}
   join: fact_recruit_additonal_tag_mapping {
     type: inner
     relationship: one_to_many
