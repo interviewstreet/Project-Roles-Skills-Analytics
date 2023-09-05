@@ -42,6 +42,7 @@ view: recruit_attempts {
     sql: ${TABLE}.created_at ;;
   }
 
+
   dimension: email {
     type: string
     sql: ${TABLE}.email ;;

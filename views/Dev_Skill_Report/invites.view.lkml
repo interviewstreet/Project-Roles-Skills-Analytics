@@ -360,7 +360,9 @@ when industry = 'Manufacturing / Retail / Wholesale / Distribution'then'Industri
 when industry = 'Plastics'then'Materials'
 when industry = 'Federal'then'Government'
 else 'Other' end as industry_high_level,
-          COUNT(DISTINCT recruit_test_candidates.id) AS "count_of_id"
+          COUNT(DISTINCT recruit_test_candidates.id) AS "count_of_id",
+                    COUNT(DISTINCT recruit_test_candidates.attempt_id) AS "attempts"
+
       FROM ever_paid_companies_inc_tcs
       INNER JOIN recruit.recruit_tests  AS recruit_tests ON ever_paid_companies_inc_tcs.company_id = abs(recruit_tests.company_id)
       LEFT JOIN recruit.recruit_test_candidates  AS recruit_test_candidates ON recruit_test_candidates.test_id = recruit_tests.id
@@ -411,11 +413,18 @@ else 'Other' end as industry_high_level,
     sql: ${TABLE}.count_of_id ;;
   }
 
+  dimension: attempts {
+    type: number
+    sql: ${TABLE}.attempts ;;
+  }
+
+
   set: detail {
     fields: [
       created_at_year,
       company_id,
       invites,
+      attempts,
       region_c,
       industry_high_level
     ]
