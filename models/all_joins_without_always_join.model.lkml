@@ -1,6 +1,6 @@
 connection: "recruit_rs_replica"
 
-#include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
+include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
 include: "/**/*.view.lkml"                 # include all views in this project
 # include: "my_dashboard.dashboard.lookml"   # include a LookML dashboard called my_dashboard
 
@@ -28,6 +28,25 @@ case_sensitive: no
     sql_on: ${ever_paid_companies_inc_tcs.company_id} = ${dim_recruit_company_data.company_data_company_id} ;;
   }
 
+  join: recruit_interviews {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${recruit_interviews.company_id} = ${ever_paid_companies_inc_tcs.company_id} ;;
+  }
+
+  join: recruit_interview_attendants {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${recruit_interviews.id} = ${recruit_interview_attendants.interview_id}  ;;
+  }
+
+  join: recruit_interview_attendant_data {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${recruit_interview_attendants.id} = ${recruit_interview_attendant_data.ia_id}  ;;
+  }
+
+
   join: recruit_tests {
     type: inner
     relationship: one_to_many
@@ -41,6 +60,8 @@ case_sensitive: no
     relationship: one_to_many
     sql_on: ${recruit_tests.id} = ${recruit_tests_data.tid} ;;
   }
+
+
 
   join: test_user_owner {
     type: inner
@@ -124,6 +145,15 @@ join: recruit_teams {
     and ${recruit_test_candidates.attempt_id} = ${recruit_attempts.id};;
   }
 
+  join: aws_ses_mail {
+    type: left_outer
+    relationship: one_to_one
+    sql_on:  ${aws_ses_mail.entity_id} = ${recruit_test_candidates.test_user_id};;
+    sql_where:
+      aws_ses_mail."tag" = 'hrw-test-invite'
+      and ${aws_ses_mail.entity_type} = 'Recruit::TestUser' ;;
+  }
+
 
   join: recruit_attempts {
     type: inner
@@ -143,6 +173,14 @@ join: recruit_teams {
     relationship: one_to_many
     sql_on: ${recruit_attempts.id} = ${recruit_attempt_data.aid} ;;
   }
+
+  join: jpmc_ip_country_mapping {
+    type: inner
+    relationship:one_to_one
+    sql_where: ${recruit_attempt_data.key} = 'ip_address' ;;
+    sql_on: ${recruit_attempt_data.value} = ${jpmc_ip_country_mapping.ip_address};;
+  }
+
   join: recruit_solves {
     type: inner
     relationship: one_to_many

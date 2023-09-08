@@ -116,6 +116,12 @@ view: dim_content_questions {
     sql: ${TABLE}.question_leaked_data_updated_at ;;
   }
 
+  dimension: question_leaked_updated_at_custom {
+    type: string
+    sql: LEFT(json_extract_path_text(${TABLE}.question_leaked_data, 'updated_at'), 10) ;;
+  }
+
+
   dimension: question_level {
     type: string
     sql: ${TABLE}.question_level ;;

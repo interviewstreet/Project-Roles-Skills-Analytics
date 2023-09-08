@@ -360,7 +360,7 @@ when industry = 'Manufacturing / Retail / Wholesale / Distribution'then'Industri
 when industry = 'Plastics'then'Materials'
 when industry = 'Federal'then'Government'
 else 'Other' end as industry_high_level,
-          COUNT(DISTINCT recruit_test_candidates.id) AS "count_of_id",
+          COUNT(DISTINCT recruit_test_candidates.id) AS "invites",
                     COUNT(DISTINCT recruit_test_candidates.attempt_id) AS "attempts"
 
       FROM ever_paid_companies_inc_tcs
@@ -410,7 +410,7 @@ else 'Other' end as industry_high_level,
 
   dimension: invites {
     type: number
-    sql: ${TABLE}.count_of_id ;;
+    sql: ${TABLE}.invites ;;
   }
 
   dimension: attempts {
