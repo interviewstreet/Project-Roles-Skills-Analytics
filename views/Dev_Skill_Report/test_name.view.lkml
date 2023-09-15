@@ -6,15 +6,15 @@ view: test_name {
       ra.starttime as starttime,
       rt.company_id as company_id,
 
-      case when (lower(rt.name) like '%machine learning%'
-                   or lower(rt.name) like '%data scientist%'
-                   or lower(rt.name) like '%data science%'
-                   or lower(rt.name) like '%deep learning%'
-                   or lower(rt.name) like '%mle%'
-                   or lower(rt.name) like '%ai%'
-                   or lower(rt.name) like '%artificial%'
-                   or lower(rt.name) like '%prompt engineer%'
-                   or lower(rt.name) like '%llm%')
+             case when (lower(rt.name) like '%machine learning%'
+                  or lower(rt.name) like '%data scientist%'
+                  or lower(rt.name) like '%data science%'
+                  or lower(rt.name) like '%deep learning%'
+                  or lower(rt.name) like '%mle%'
+                  or lower(rt.name) like '%ai%'
+                  or lower(rt.name) like '%artificial%'
+                  or lower(rt.name) like '%prompt engineer%'
+                  or lower(rt.name) like '%llm%')
                   then 'machine-learning-ai-deep-learning'
            when lower(rt.name) like '%linux%' then 'linux'
            when lower(rt.name) like '%bash%' then 'bash'
@@ -115,7 +115,7 @@ view: test_name {
           or lower(rt.name) like '%reactnative%'
            or lower(rt.name) like '%react%'
           or lower(rt.name)  like '%react%native%'
-          and lower(rt.name)  like '%react%native%'
+          or lower(rt.name)  like '%react%native%'
            or lower(rt.name) like '%systemdesign%'
           or lower(rt.name) like '%system%design%'
            or lower(rt.name) like '%aws%'
