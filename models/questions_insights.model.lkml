@@ -17,7 +17,7 @@ explore: dim_content_questions {
   join: recruit_solves {
     type: inner
     relationship: one_to_many
-    sql_on: ${ai_question_analysis.question_id} = ${recruit_solves.qid} ;;
+    sql_on: ${dim_content_questions.question_id} = ${recruit_solves.qid} ;;
     sql_where: ${recruit_solves.aid} > 0
       and ${recruit_solves.status} = 2 ;;
   }
