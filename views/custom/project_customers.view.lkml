@@ -2,9 +2,9 @@ view: project_customers {
   derived_table: {
     sql: select company_id,company_data_created_at, company_data_updated_at, company_data_key, company_data_value
       from
-      global.dim_recruit_company rc
+     hr_analytics.global.dim_recruit_company rc
       inner join
-      global.dim_recruit_company_data rcd
+     hr_analytics.global.dim_recruit_company_data rcd
       on
       rc.company_id = rcd.company_data_company_id
       where

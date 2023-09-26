@@ -2,7 +2,7 @@ view: roles_tests_tagging {
   derived_table: {
     sql: select frr.role_name ,frr.role_company_id, atm.eid as test_id
             from
-            global.fact_rs_roles frr
+           hr_analytics.global.fact_rs_roles frr
             inner join recruit.recruit_additional_tags at on frr.role_unique_id = at."tag"
             and at.tag_type = 4
             and at.taggable_type = 'Recruit::Test'

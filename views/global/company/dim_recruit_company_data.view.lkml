@@ -1,5 +1,5 @@
 view: dim_recruit_company_data {
-  sql_table_name: global.dim_recruit_company_data ;;
+  sql_table_name:hr_analytics.global.dim_recruit_company_data ;;
 
   dimension: company_data_company_id {
     type: number

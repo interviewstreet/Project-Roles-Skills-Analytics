@@ -1,5 +1,5 @@
 view: fact_rs_skills {
-  sql_table_name: global.fact_rs_skills ;;
+  sql_table_name:hr_analytics.global.fact_rs_skills ;;
 
   dimension: companyid {
     type: number

@@ -1,5 +1,5 @@
 view: fact_recruit_company_plan_changelog {
-  sql_table_name: global.fact_recruit_company_plan_changelog ;;
+  sql_table_name:hr_analytics.global.fact_recruit_company_plan_changelog ;;
 
   dimension: company_plan_changelog_company_id {
     type: number
