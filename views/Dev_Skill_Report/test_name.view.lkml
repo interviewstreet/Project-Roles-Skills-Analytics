@@ -18,12 +18,6 @@ view: test_name {
                   then 'machine-learning-ai-deep-learning'
            when lower(rt.name) like '%linux%' then 'linux'
            when lower(rt.name) like '%bash%' then 'bash'
-           when lower(rt.name) like '%python%' then 'python'
-           when lower(rt.name) like '%sql%' then 'sql'
-           when (lower(rt.name) like '%cpp%' or lower(rt.name) like '%c++%') then 'cpp'
-           when (lower(rt.name) like '%c%sharp%' or lower(rt.name) like '%c#%') then 'csharp'
-           when (lower(rt.name) like '%java%' and lower(rt.name) not like '%java%script%'and lower(rt.name) not like '%javascript%')then 'java'
-           when (lower(rt.name) like '%java%script%' or lower(rt.name) like '%javascript%')then 'javascript'
            when (lower(rt.name) like '%react%native%' or lower(rt.name) like '%reactnative%')then 'react-native'
            when (lower(rt.name) like '%react%' and lower(rt.name) not like '%react%native%' and lower(rt.name) not like '%react%native%') then 'react'
            when (lower(rt.name) like '%systemdesign%'or lower(rt.name) like '%system%design%')then 'systemdesign'
@@ -35,15 +29,11 @@ view: test_name {
            when (lower(rt.name) like '%problemsolving%' or lower(rt.name) like '%problem%solving%') then 'problem-solving'
            when (lower(rt.name) like '%expressjs%' or lower(rt.name) like '%express%js%') then 'express.js'
            when lower(rt.name) like '%angular%' then 'angular'
-           when (lower(rt.name) like '%cpp%' or lower(rt.name) like '%c++%') then 'cpp'
            when (lower(rt.name) like '%data%visualization%' or lower(rt.name) like '%datavisualization%' or lower(rt.name) like '%datavisualisation%' or lower(rt.name) like '%data%visualisation%') then 'data-visualization'
            when (lower(rt.name) like '%data%modeling%' or lower(rt.name) like '%datamodeling%') then 'data-modeling'
            when (lower(rt.name) like '%data%wrangling%' or lower(rt.name) like '%datawrangling%') then 'data-wrangling'
-
-
-
-
-           else 'others' end as language,
+          --else 'others'
+          end as language,
 
       count(distinct ra.id) as total_attempt_count,
       count(distinct rt.id) as active_tests,
@@ -90,15 +80,17 @@ view: test_name {
       ON rt.company_id = ever_paid_accounts.company_id
           and rt.state = 1   -- Considered only Live Tests (Confirm if archived adn demo are also to be included)
           and rt.draft = 0   -- Considered only published Tests
-          and (lower(rt.name) like '%python%'
-               or lower(rt.name) like '%sql%'
-               or lower(rt.name) like '%c++%'
-               or lower(rt.name) like '%cpp%'
-               or lower(rt.name) like '%c%sharp%'
-               or lower(rt.name) like '%c#%'
-               or lower(rt.name) like '%java%'
-               or lower(rt.name) like '%javascript%'
-               or lower(rt.name) like '%machine learning%'
+          and (
+          --lower(rt.name) like '%python%'
+              -- or lower(rt.name) like '%sql%'
+              -- or lower(rt.name) like '%c++%'
+              -- or lower(rt.name) like '%cpp%'
+              -- or lower(rt.name) like '%c%sharp%'
+             --  or lower(rt.name) like '%c#%'
+             --  or lower(rt.name) like '%java%'
+             --  or lower(rt.name) like '%javascript%'
+               --or
+              lower(rt.name) like '%machine learning%'
                or lower(rt.name) like '%data scientist%'
                or lower(rt.name) like '%data science%'
                or lower(rt.name) like '%deep learning%'
@@ -130,8 +122,6 @@ view: test_name {
                   or lower(rt.name) like '%expressjs%'
                   or lower(rt.name) like '%express%js%'
                   or lower(rt.name) like '%angular%'
-                  or lower(rt.name) like '%cpp%'
-                  or lower(rt.name) like '%c++%'
                   or lower(rt.name) like '%data%visualization%'
                   or lower(rt.name) like '%datavisualization%'
                   or lower(rt.name) like '%datavisualisation%'
