@@ -5,17 +5,12 @@ view: test_name_lang {
       select
       ra.starttime as starttime,
       rt.company_id as company_id,
-
-
-      when lower(rt.name) like '%python%' then 'python'
+      case when lower(rt.name) like '%python%' then 'python'
       when lower(rt.name) like '%sql%' then 'sql'
       when (lower(rt.name) like '%cpp%' or lower(rt.name) like '%c++%') then 'cpp'
       when (lower(rt.name) like '%c%sharp%' or lower(rt.name) like '%c#%') then 'csharp'
       when (lower(rt.name) like '%java%' and lower(rt.name) not like '%java%script%'and lower(rt.name) not like '%javascript%')then 'java'
       when (lower(rt.name) like '%java%script%' or lower(rt.name) like '%javascript%')then 'javascript'
-
-
-
       --else 'others'
       end as language,
 
