@@ -122,6 +122,14 @@ join: recruit_teams {
     sql_on: ${recruit_tests.id} = ${recruit_tests_questions.test_id} ;;
   }
 
+  join: dim_content_questions_for_test_questions_mapping {
+    type: inner
+    relationship: many_to_one
+    sql_on: ${dim_content_questions_for_test_questions_mapping.question_id} = ${recruit_tests_questions.question_id} ;;
+  }
+
+
+
   join: question_skill_mapping {
     type: inner
     relationship: one_to_many

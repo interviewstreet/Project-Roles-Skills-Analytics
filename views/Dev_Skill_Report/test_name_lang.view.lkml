@@ -11,6 +11,22 @@ view: test_name_lang {
       when (lower(rt.name) like '%c%sharp%' or lower(rt.name) like '%c#%') then 'csharp'
       when (lower(rt.name) like '%java%' and lower(rt.name) not like '%java%script%'and lower(rt.name) not like '%javascript%')then 'java'
       when (lower(rt.name) like '%java%script%' or lower(rt.name) like '%javascript%')then 'javascript'
+      when lower(rt.name) like '%php%'  then 'php'
+      when (lower(rt.name) like 'go %'or lower(rt.name) like '% go %')then 'go'
+      when lower(rt.name) like '%swift%' then 'swift'
+      when lower(rt.name) like '%kotlin%' then 'kotlin'
+      when lower(rt.name) like '%ruby%' then 'ruby'
+            when lower(rt.name) like '%typescript%' then 'typescript'
+      when lower(rt.name) like '%scala%' then 'scala'
+            when (lower(rt.name) like 'r %' or lower(rt.name) like '% r %')then 'r'
+                  when (lower(rt.name) like '%html%' or lower(rt.name) like '%css%')then 'html/css'
+
+
+
+
+
+
+
       --else 'others'
       end as language,
 
@@ -67,6 +83,23 @@ view: test_name_lang {
       or lower(rt.name) like '%c#%'
       or lower(rt.name) like '%java%'
       or lower(rt.name) like '%javascript%'
+      or lower(rt.name) like '%typescript%'
+      or lower(rt.name) like '%scala%'
+or lower(rt.name) like '% go%'
+or lower(rt.name) like '%go %'
+or lower(rt.name) like '% go %'
+or lower(rt.name) like '%php%'
+or lower(rt.name) like '% php %'
+or lower(rt.name) like 'php %'
+      or lower(rt.name) like '%swift%'
+      or lower(rt.name) like '%kotlin%'
+      or lower(rt.name) like '%ruby%'
+            or lower(rt.name) like '%typescript%'
+      or lower(rt.name) like '%scala%'
+            or lower(rt.name) like 'r %'
+            or lower(rt.name) like '% r %'
+            or lower(rt.name) like '%html%'
+            or lower(rt.name) like '%css%'
       --or lower(rt.name) like '%machine learning%'
       --or lower(rt.name) like '%data scientist%'
       --or lower(rt.name) like '%data science%'

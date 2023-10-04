@@ -9,7 +9,7 @@ view: ml_ai_ds_skills {
         when (lower(rt.name) like '%data science%' or lower(rt.name) like '%data scientist%') then 'data-science'
         when  lower(rt.name) like '%deep learning%' then 'deep-learning'
         when (lower(rt.name) like '%ai %' or lower(rt.name) like '% ai%' or lower(rt.name) like '% ai %' or lower(rt.name) like '%artificial%')then 'ai'
-        when lower(rt.name) like '%prompt engineer%' then 'prompt-engineer'
+        when (lower(rt.name) like '%prompt engineer%')then 'prompt-engineer'
         when (lower(rt.name) like '% llm %' or lower(rt.name) like '% llm%' or lower(rt.name) like '%llm %'  /*or lower(rt.name) like '%llm%'*/) then 'llm'
         else 'others' end as language,
 

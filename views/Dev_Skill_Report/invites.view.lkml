@@ -368,7 +368,7 @@ else 'Other' end as industry_high_level,
       LEFT JOIN recruit.recruit_test_candidates  AS recruit_test_candidates ON recruit_test_candidates.test_id = recruit_tests.id
             and recruit_tests.draft = 0
             and recruit_tests.state <> 3
-      left join mails_rs_replica.mail.aws_ses_mail aws
+      inner join mails_rs_replica.mail.aws_ses_mail aws
             -- left join recruit_rs_replica.recruit.recruit_test_candidates rtc
             on aws.entity_id = recruit_test_candidates.test_user_id
             -- where entity_id = 43938431
