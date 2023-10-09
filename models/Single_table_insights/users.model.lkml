@@ -12,6 +12,16 @@ explore: recruit_users {
     relationship: one_to_many
     sql_on: ${recruit_users.id} = ${recruit_test_candidates.user_id} ;;
   }
+  join: recruit_user_team_mappings {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${recruit_users.id} = ${recruit_user_team_mappings.user_id} ;;
+  }
+  join: recruit_teams {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${recruit_user_team_mappings.team_id} = ${recruit_teams.id} ;;
+  }
 }
 # explore: order_items {
 #   join: orders {
