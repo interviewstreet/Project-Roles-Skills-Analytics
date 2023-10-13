@@ -119,7 +119,14 @@ join: recruit_teams {
   join: recruit_tests_questions {
     type: inner
     relationship: one_to_many
+    sql_where: ${recruit_tests_questions.active} = 1 ;;
     sql_on: ${recruit_tests.id} = ${recruit_tests_questions.test_id} ;;
+  }
+
+  join: ai_question_analysis {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${recruit_tests_questions.question_id} = ${ai_question_analysis.question_id}  ;;
   }
 
   join: dim_content_questions_for_test_questions_mapping {
@@ -164,7 +171,7 @@ join: recruit_teams {
 
 
   join: recruit_attempts {
-    type: inner
+    type: left_outer
     relationship: one_to_many
     sql_on: abs(${recruit_tests.id}) = abs(${recruit_attempts.tid}) ;;
     sql_where: ${recruit_attempts.tid} > 0
@@ -190,7 +197,7 @@ join: recruit_teams {
   }
 
   join: recruit_solves {
-    type: inner
+    type: left_outer
     relationship: one_to_many
     sql_on: ${recruit_attempts.id} = ${recruit_solves.aid} ;;
     sql_where: ${recruit_solves.aid} > 0

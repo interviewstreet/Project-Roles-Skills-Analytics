@@ -9,13 +9,13 @@ include: "/**/*.view.lkml"                 # include all views in this project
 explore: dim_content_questions {
 
   join: ai_question_analysis {
-    type: inner
-    relationship: one_to_one
+    type: left_outer
+    relationship: one_to_many
     sql_on: ${ai_question_analysis.question_id} = ${dim_content_questions.question_id} ;;
   }
 
   join: recruit_solves {
-    type: inner
+    type: left_outer
     relationship: one_to_many
     sql_on: ${dim_content_questions.question_id} = ${recruit_solves.qid} ;;
     sql_where: ${recruit_solves.aid} > 0
@@ -23,7 +23,7 @@ explore: dim_content_questions {
   }
 
   join: recruit_attempts {
-    type: inner
+    type: left_outer
     relationship: many_to_one
     sql_on: abs(${recruit_solves.aid}) = abs(${recruit_attempts.id}) ;;
     sql_where: ${recruit_attempts.tid} > 0
@@ -36,21 +36,21 @@ explore: dim_content_questions {
   }
 
   join: recruit_tests {
-    type: inner
+    type: left_outer
     relationship: many_to_one
-    sql_on: ${recruit_attempts.tid} = abs(${recruit_tests.id}) ;;
+    sql_on: abs(${recruit_attempts.tid}) = ${recruit_tests.id} ;;
     sql_where: ${recruit_tests.draft} = 0
       and ${recruit_tests.state} <> 3 ;;
   }
 
   join: recruit_tests_questions {
-    type: inner
+    type: left_outer
     relationship: one_to_many
     sql_on: ${recruit_tests.id} = ${recruit_tests_questions.test_id}  ;;
   }
 
   join: ever_paid_companies_inc_tcs {
-    type: inner
+    type: left_outer
     relationship: many_to_one
     sql_on: ${recruit_tests.company_id} = ${ever_paid_companies_inc_tcs.company_id} ;;
   }

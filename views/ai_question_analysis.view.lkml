@@ -42,4 +42,9 @@ view: ai_question_analysis {
   measure: count {
     type: count
   }
+
+  measure: count_ai_solvable_questions{
+    type: count_distinct
+    sql: case when fully_solved = 'true' then ${question_id} else null end;;
+  }
 }
