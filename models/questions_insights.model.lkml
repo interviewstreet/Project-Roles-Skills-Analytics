@@ -50,7 +50,7 @@ explore: dim_content_questions {
   }
 
   join: ever_paid_companies_inc_tcs {
-    type: left_outer
+    type: inner
     relationship: many_to_one
     sql_on: ${recruit_tests.company_id} = ${ever_paid_companies_inc_tcs.company_id} ;;
   }
