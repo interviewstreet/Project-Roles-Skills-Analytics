@@ -17,8 +17,7 @@ view: fully_solved {
       GROUP BY
           1,
           2
-          order by 1,2 asc
-      LIMIT 500 ;;
+          order by 1,2 asc;;
   }
 
   measure: count {

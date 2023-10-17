@@ -9,8 +9,7 @@ view: fully_solved_type {
       FROM hr_analytics.global.dim_content_questions  AS dim_content_questions
       INNER JOIN analytics_platform.reporting.ai_question_analysis  AS ai_question_analysis ON ai_question_analysis.question_id = dim_content_questions.question_id
       GROUP BY
-          1
-      LIMIT 500 ;;
+          1 ;;
   }
 
   measure: count {
