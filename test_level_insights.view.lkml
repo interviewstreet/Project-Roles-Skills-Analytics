@@ -46,16 +46,17 @@ view: test_level_insights {
           recruit_tests.company_id  AS "recruit_tests.company_id",
               (DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', recruit_tests.created_at ))) AS "recruit_tests.created_date",
               (DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', recruit_tests.updated_at ))) AS "recruit_tests.updated_date",
-              DATE(max(recruit_attempts.starttime)) as "recruit_tests.last_used_date",
+              DATE(max(recruit_test_candidates.invited_on)) as "recruit_tests.last_invite",
+              DATE(max(recruit_attempts.starttime)) as "recruit_tests.last_attempt",
           COUNT(DISTINCT recruit_test_candidates.id) AS "invites",
           COUNT(DISTINCT recruit_attempts.id) AS "attempts",
           (COALESCE(CAST( ( SUM(DISTINCT (CAST(FLOOR(COALESCE( CAST((recruit_attempts.scaled_percentage_score/100) AS DOUBLE PRECISION) ,0)*(1000000*1.0)) AS DECIMAL(38,0))) + CAST(STRTOL(LEFT(MD5(CAST( recruit_attempts.id   AS VARCHAR)),15),16) AS DECIMAL(38,0))* 1.0e8 + CAST(STRTOL(RIGHT(MD5(CAST( recruit_attempts.id   AS VARCHAR)),15),16) AS DECIMAL(38,0)) ) - SUM(DISTINCT CAST(STRTOL(LEFT(MD5(CAST( recruit_attempts.id   AS VARCHAR)),15),16) AS DECIMAL(38,0))* 1.0e8 + CAST(STRTOL(RIGHT(MD5(CAST( recruit_attempts.id   AS VARCHAR)),15),16) AS DECIMAL(38,0))) )  AS DOUBLE PRECISION) / CAST((1000000*1.0) AS DOUBLE PRECISION), 0) / NULLIF(COUNT(DISTINCT CASE WHEN   CAST((recruit_attempts.scaled_percentage_score/100) AS DOUBLE PRECISION)  IS NOT NULL THEN  recruit_attempts.id   ELSE NULL END), 0)) AS "average_of_percentage_score"
       FROM ever_paid_companies_inc_tcs
       INNER JOIN recruit.recruit_tests  AS recruit_tests ON ever_paid_companies_inc_tcs.company_id = abs(recruit_tests.company_id)
       INNER JOIN recruit.recruit_users  AS test_user_owner ON test_user_owner.id = abs(recruit_tests.owner)
-      INNER JOIN recruit.recruit_attempts  AS recruit_attempts ON abs(recruit_tests.id) = abs(recruit_attempts.tid)
+      left JOIN recruit.recruit_attempts  AS recruit_attempts ON abs(recruit_tests.id) = abs(recruit_attempts.tid)
       LEFT JOIN recruit.recruit_test_candidates  AS recruit_test_candidates ON recruit_test_candidates.test_id = recruit_tests.id
-          and recruit_test_candidates.attempt_id = recruit_attempts.id
+          --and recruit_test_candidates.attempt_id = recruit_attempts.id
       WHERE (recruit_tests.draft = 0
             and recruit_tests.state <> 3  AND recruit_attempts.tid > 0
                 and lower(recruit_attempts.email) not like '%@hackerrank.com%'
@@ -116,9 +117,14 @@ view: test_level_insights {
     sql: ${TABLE}."recruit_tests.updated_date" ;;
   }
 
-  dimension: recruit_tests_last_used_date {
+  dimension: recruit_tests_last_attempt {
     type: date
-    sql: ${TABLE}."recruit_tests.last_used_date" ;;
+    sql: ${TABLE}."recruit_tests.last_attempt" ;;
+  }
+
+  dimension: recruit_tests_last_invite {
+    type: date
+    sql: ${TABLE}."recruit_tests.last_invite" ;;
   }
 
   dimension: invites {
@@ -144,7 +150,8 @@ view: test_level_insights {
   test_user_owner_email,
   recruit_tests_created_date,
   recruit_tests_updated_date,
-  recruit_tests_last_used_date,
+  recruit_tests_last_invite,
+  recruit_tests_last_attempt,
   invites,
   attempts,
   average_of_percentage_score
