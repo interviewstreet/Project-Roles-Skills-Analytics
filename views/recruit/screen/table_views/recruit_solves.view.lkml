@@ -88,6 +88,13 @@ view: recruit_solves {
     sql: ${TABLE}.score ;;
   }
 
+  dimension: score_zero_nonzero {
+    type: string
+    sql: case when ${TABLE}.score = 0 then 'zero'
+    else 'non_zero' end;;
+  }
+
+
   dimension: max_score {
     type: number
     sql: json_extract_path_text(${TABLE}.metadata,'max_score',true);;
