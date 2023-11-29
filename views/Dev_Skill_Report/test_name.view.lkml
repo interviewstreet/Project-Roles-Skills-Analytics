@@ -32,7 +32,7 @@ view: test_name {
            when (lower(rt.name) like '%data%visualization%' or lower(rt.name) like '%datavisualization%' or lower(rt.name) like '%datavisualisation%' or lower(rt.name) like '%data%visualisation%') then 'data-visualization'
            when (lower(rt.name) like '%data%modeling%' or lower(rt.name) like '%datamodeling%') then 'data-modeling'
            when (lower(rt.name) like '%data%wrangling%' or lower(rt.name) like '%datawrangling%') then 'data-wrangling'
-          --else 'others'
+          else 'others'
           end as language,
 
       count(distinct ra.id) as total_attempt_count,
