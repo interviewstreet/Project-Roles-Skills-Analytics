@@ -7,6 +7,7 @@ include: "/**/*.view.lkml"                 # include all views in this project
 # # Select the views that should be a part of this model,
 # # and define the joins that connect them together.
 explore: lang_based_on_lib_questions {}
+explore: lang_based_on_lib_questions_nolanglimit {}
 # explore: order_items {
 #   join: orders {
 #     relationship: many_to_one
