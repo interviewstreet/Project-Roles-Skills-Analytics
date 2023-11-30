@@ -4,10 +4,12 @@ view: lang_based_on_lib_questions {
 
               language,
               date_trunc('month', attempt_starttime) as month_year,
+              test_id as tests
+              /*,
               count(distinct question_id) as questions,
               count(distinct attempt_id) as attempts,
               count(distinct test_id) as active_tests,
-              count(distinct company_id) as active_customers
+              count(distinct company_id) as active_customers*/
 
 
               from
@@ -179,13 +181,19 @@ view: lang_based_on_lib_questions {
                   ) raw_dt
 
               where no_of_languages <= 5
-              group by 1,2;;
+              --group by 1,2
+              ;;
     }
 
     measure: count {
       type: count
       drill_fields: [detail*]
     }
+
+  measure: tests {
+    type: count_distinct
+    sql: ${TABLE}.tests ;;
+  }
 
     dimension: language {
       type: string
@@ -197,34 +205,31 @@ view: lang_based_on_lib_questions {
       sql: ${TABLE}.month_year ;;
     }
 
-    dimension: questions {
-      type: number
-      sql: ${TABLE}.questions ;;
-    }
+    # dimension: questions {
+    #   type: number
+    #   sql: ${TABLE}.questions ;;
+    # }
 
-    dimension: attempts {
-      type: number
-      sql: ${TABLE}.attempts ;;
-    }
+    # dimension: attempts {
+    #   type: number
+    #   sql: ${TABLE}.attempts ;;
+    # }
 
-    dimension: active_tests {
-      type: number
-      sql: ${TABLE}.active_tests ;;
-    }
+    # dimension: active_tests {
+    #   type: number
+    #   sql: ${TABLE}.active_tests ;;
+    # }
 
-    dimension: active_customers {
-      type: number
-      sql: ${TABLE}.active_customers ;;
-    }
+    # dimension: active_customers {
+    #   type: number
+    #   sql: ${TABLE}.active_customers ;;
+    # }
 
     set: detail {
       fields: [
         language,
         month_year_time,
-        questions,
-        attempts,
-        active_tests,
-        active_customers
+        tests
       ]
     }
   }

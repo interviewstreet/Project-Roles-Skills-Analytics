@@ -26,10 +26,10 @@ view: lang_based_on_test_names {
                 when (lower(test_name) like '%html%' or lower(test_name) like '%css%')then 'html/css'
       else 'others'
       end as language,
-
-              count(distinct attempt_id) as total_attempt_count,
-              count(distinct test_id) as active_tests,
-              count(distinct company_id) as active_customers
+test_id as tests
+              --count(distinct attempt_id) as total_attempt_count,
+              --count(distinct test_id) as active_tests,
+              --count(distinct company_id) as active_customers
 
               from hr_analytics.global.dim_recruit_test rt
               INNER JOIN
@@ -105,13 +105,19 @@ or lower(test_name) like '%javascript%'
                   on rt.test_id = ra.attempt_test_id
                   and date(attempt_starttime) >= '2019-01-01'
                   -- and date(attempt_starttime) <= '2022-06-30'
-              group by 1,2 ;;
+              --group by 1,2
+              ;;
     }
 
     measure: count {
       type: count
       drill_fields: [detail*]
     }
+
+  measure: tests {
+    type: count_distinct
+    sql: ${TABLE}.tests ;;
+  }
 
     dimension_group: month_year {
       type: time
@@ -123,28 +129,26 @@ or lower(test_name) like '%javascript%'
       sql: ${TABLE}.language ;;
     }
 
-    dimension: total_attempt_count {
-      type: number
-      sql: ${TABLE}.total_attempt_count ;;
-    }
+    # dimension: total_attempt_count {
+    #   type: number
+    #   sql: ${TABLE}.total_attempt_count ;;
+    # }
 
-    dimension: active_tests {
-      type: number
-      sql: ${TABLE}.active_tests ;;
-    }
+    # dimension: active_tests {
+    #   type: number
+    #   sql: ${TABLE}.active_tests ;;
+    # }
 
-    dimension: active_customers {
-      type: number
-      sql: ${TABLE}.active_customers ;;
-    }
+    # dimension: active_customers {
+    #   type: number
+    #   sql: ${TABLE}.active_customers ;;
+    # }
 
     set: detail {
       fields: [
         month_year_time,
         language,
-        total_attempt_count,
-        active_tests,
-        active_customers
+tests
       ]
     }
   }
