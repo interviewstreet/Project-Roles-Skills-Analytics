@@ -176,7 +176,7 @@ view: lang_based_on_lib_questions_nolanglimit {
       on rtq.test_question_question_id = cq.question_id
       -- on rs.solve_question_id = cq.question_id
       and cq.question_product = 1
-      and cq.question_type in ('code', 'approx')
+      and cq.question_type in ('code', 'approx','database')
       ) raw_dt
 
       --where no_of_languages <= 5
