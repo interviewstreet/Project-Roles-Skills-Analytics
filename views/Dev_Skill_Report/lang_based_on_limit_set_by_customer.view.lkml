@@ -50,13 +50,13 @@ view: lang_based_on_limit_set_by_customer {
               inner join
               (select row_number() over(order by true)::integer as n from recruit.recruit_tests_data limit 20) seq
               on seq.n <= LEN(rtd.value) - LEN(REPLACE(rtd.value, ',', ''))+1
-              and
-              rtd.created_at >= '2021-01-01'
+              --and
+              --rtd.created_at >= '2021-01-01'
               inner join
               recruit.recruit_tests rt
               on rt.id = rtd.tid
               and
-              rt.created_at >= '2021-01-01'
+              rt.created_at >= '2019-01-01'
               inner join ever_paid_accounts
               on
               rt.company_id = ever_paid_accounts.company_id
