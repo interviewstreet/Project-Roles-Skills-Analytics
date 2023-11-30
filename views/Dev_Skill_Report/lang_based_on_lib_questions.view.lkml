@@ -5,8 +5,7 @@ view: lang_based_on_lib_questions {
               language,
               date_trunc('month', attempt_starttime) as month_year,
               test_id as tests
-              /*,
-              count(distinct question_id) as questions,
+/*              count(distinct question_id) as questions,
               count(distinct attempt_id) as attempts,
               count(distinct test_id) as active_tests,
               count(distinct company_id) as active_customers*/
@@ -105,17 +104,6 @@ view: lang_based_on_lib_questions {
                       attempt_starttime,
                       attempt_endtime
 
-                      -- count(distinct ra.attempt_id) as total_attempt_count,
-                      -- count(distinct cq.question_id) as total_questions
-                      -- count(distinct case when cq.question_type in ('code', 'approx') then cq.question_id end) as coding_question_count,
-                      -- count(distinct case when JSON_ARRAY_LENGTH(json_extract_path_text(question_type_attributes, 'languages', true)) >= 10 then cq.question_id end) as questions_with_multiple_languages,
-
-
-
-                      -- count(distinct case when JSON_ARRAY_LENGTH(json_extract_path_text(question_type_attributes, 'languages', true)) < 10  then cq.question_id end) as questions_not_with_multiple_languages,
-                      -- count(distinct case when JSON_ARRAY_LENGTH(json_extract_path_text(question_type_attributes, 'languages', true)) >= 10 then cq.question_id end) +
-                      -- count(distinct case when JSON_ARRAY_LENGTH(json_extract_path_text(question_type_attributes, 'languages', true)) < 10  then cq.question_id end) addition ,
-
                         from hr_analytics.global.dim_recruit_test rt
 
                         INNER JOIN
@@ -166,10 +154,6 @@ view: lang_based_on_lib_questions {
                         and date(attempt_starttime) >= '2019-01-01'
                       --   and date(attempt_starttime) <= '2022-06-30'
 
-                  -- inner join hr_analytics.global.fact_recruit_solve rs
-                  --       on ra.attempt_test_id = rs.solve_test_id
-                  --       and solve_attempt_id > 0
-                  --       and solve_status = 2
                   inner join hr_analytics.global.dim_recruit_test_question rtq
                         on rt.test_id = rtq.test_question_test_id
                         and rtq.test_question_active = 1
@@ -229,7 +213,7 @@ view: lang_based_on_lib_questions {
       fields: [
         language,
         month_year_time,
-        tests
+tests
       ]
     }
   }
