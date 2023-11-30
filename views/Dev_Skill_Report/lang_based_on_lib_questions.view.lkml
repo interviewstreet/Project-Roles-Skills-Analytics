@@ -17,7 +17,7 @@ view: lang_based_on_lib_questions {
                       test_name,
                       json_extract_path_text(question_type_attributes, 'languages', true) as language_list,
 
-                      case /*when ( lower(json_extract_path_text(question_type_attributes, 'languages', true)) like '%java%'
+                      case when ( lower(json_extract_path_text(question_type_attributes, 'languages', true)) like '%java%'
                                   and lower(json_extract_path_text(question_type_attributes, 'languages', true)) like '%python%'
                                   and ( lower(json_extract_path_text(question_type_attributes, 'languages', true)) like '%c%'
                                           or lower(json_extract_path_text(question_type_attributes, 'languages', true)) like '%cpp%')
@@ -62,16 +62,16 @@ view: lang_based_on_lib_questions {
                                   and ( lower(json_extract_path_text(question_type_attributes, 'languages', true)) like '%c%'
                                           or lower(json_extract_path_text(question_type_attributes, 'languages', true)) like '%cpp%')
                                   and lower(json_extract_path_text(question_type_attributes, 'languages', true)) not like '%javascript%'
-                                ) then 'java-cpp'*/
+                                ) then 'java-cpp'
 
                           when  lower(json_extract_path_text(question_type_attributes, 'languages', true)) like '%java%'
                           and lower(json_extract_path_text(question_type_attributes, 'languages', true)) not like '%javascript%' then 'java'
 
                           when  lower(json_extract_path_text(question_type_attributes, 'languages', true)) like '%python%' then 'python'
 
-                          when     lower(json_extract_path_text(question_type_attributes, 'languages', true)) like '%c%'
+                          when     lower(json_extract_path_text(question_type_attributes, 'languages', true)) like '%"c"%' then 'c'
 
-                          and lower(json_extract_path_text(question_type_attributes, 'languages', true)) like '%cpp%' then 'c/cpp'
+                          when lower(json_extract_path_text(question_type_attributes, 'languages', true)) like '%cpp%' then 'cpp'
 
                            when lower(json_extract_path_text(question_type_attributes, 'languages', true)) like '%javascript%' then 'javascript'
                            when ( lower(json_extract_path_text(question_type_attributes, 'languages', true)) like '%csharp%'
