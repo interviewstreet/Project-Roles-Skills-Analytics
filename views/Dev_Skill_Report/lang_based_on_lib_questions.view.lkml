@@ -3,7 +3,7 @@ view: lang_based_on_lib_questions {
       sql: select
 
               language,
-              date_trunc('month', attempt_starttime) as month_year,
+              date_trunc('month', test_created_at) as month_year,
               test_id as tests
 /*              count(distinct question_id) as questions,
               count(distinct attempt_id) as attempts,
@@ -15,6 +15,7 @@ view: lang_based_on_lib_questions {
                   (select
                       company_id,
                       rt.test_id,
+                      rt.test_created_at,
                       test_name,
                       json_extract_path_text(question_type_attributes, 'languages', true) as language_list,
 

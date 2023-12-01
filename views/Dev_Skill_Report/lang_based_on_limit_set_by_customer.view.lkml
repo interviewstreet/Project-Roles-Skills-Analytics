@@ -64,7 +64,7 @@ view: lang_based_on_limit_set_by_customer {
               key = 'allowedLanguages'
 
 
-              and lang <=5
+              and lang <=5 --and lang >1
              -- and rtd.tid = 1759967
               )
               select case when programming_language like '%cpp%' then 'cpp'

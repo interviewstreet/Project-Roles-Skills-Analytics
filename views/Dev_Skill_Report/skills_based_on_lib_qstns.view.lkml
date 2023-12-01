@@ -70,7 +70,7 @@ view: skills_based_on_lib_qstns {
 
 
       select
-      date_trunc('month', attempt_starttime) as month_year,
+      date_trunc('month', dim_recruit_test.test_created_at) as month_year,
       dim_recruit_test.test_company_id as test_company_id,
       lib_q_skill_map.modified_skill_name  AS "lib_q_skill_map.modified_skill_name",
       dim_recruit_test.test_id as tests
@@ -95,8 +95,8 @@ view: skills_based_on_lib_qstns {
 
 /*      union
 
-                    select
-      date_trunc('month', ra.starttime)as month_year,
+                   select
+      date_trunc('month', rt.created_at)as month_year,
       rt.company_id as test_company_id,
             case
             -- when lower(rt.name) like '%cloud%computing%' then 'cloud_computing'

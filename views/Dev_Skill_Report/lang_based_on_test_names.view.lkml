@@ -7,7 +7,7 @@ view: lang_based_on_test_names {
               select
               -- test_id,
               -- test_name,
-              date_trunc('month', attempt_starttime) as month_year,
+              date_trunc('month', test_created_at) as month_year,
 
                 case when lower(test_name) like '%python%' then 'python'
                 when lower(test_name) like '%sql%' then 'sql'

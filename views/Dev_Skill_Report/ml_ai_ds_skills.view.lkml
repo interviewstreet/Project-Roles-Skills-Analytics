@@ -2,7 +2,7 @@ view: ml_ai_ds_skills {
       derived_table: {
       sql: -- ######## Tests with Specific Skills Mentioned in Names ########
               select
-              ra.starttime as starttime,
+              rt.created_at as starttime,
               rt.company_id as company_id,
 
         case when (lower(rt.name) like '%machine learning%' or lower(rt.name) like '%mle%') then 'machine-learning'

@@ -54,6 +54,12 @@ case_sensitive: no
     sql_where: ${recruit_tests.draft} = 0
       and ${recruit_tests.state} <> 3 ;;
   }
+  # for dev skill report candidate lang tile
+  join: tests_with_lang_less_than_6 {
+    type: inner
+    relationship: one_to_one
+    sql_on: ${tests_with_lang_less_than_6.tid} = ${recruit_tests.id} ;;
+  }
 
   join: recruit_tests_data {
     type: inner
