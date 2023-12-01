@@ -55,6 +55,7 @@ view: ml_ai_ds_skills {
         ) as ever_paid_accounts
 
         ON rt.company_id = ever_paid_accounts.company_id
+        and rt.created_at >= '2019-01-01'
         and rt.state = 1   -- Considered only Live Tests (Confirm if archived adn demo are also to be included)
         and rt.draft = 0   -- Considered only published Tests
         and( lower(rt.name) like '%machine learning%'
