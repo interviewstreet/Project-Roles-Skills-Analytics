@@ -9,7 +9,8 @@ view: fully_solved {
             else 'not mentioned' end AS question_proficiency,
           COUNT(DISTINCT ai_question_analysis.question_id) AS "Total_Questions",
           sum(case when percentage = 100 and model = 'gpt-3' then 1 else 0 end) AS "GPT3_Solved",
-          sum(case when percentage = 100 and model = 'gpt-4' then 1 else 0 end) AS "GPT4_Solved"
+          sum(case when percentage = 100 and model = 'gpt-4' then 1 else 0 end) AS "GPT4_Solved",
+          sum(case when percentage = 100 and model = 'gpt-4-turbo' then 1 else 0 end) AS "GPT4_Turbo_Solved"
       FROM hr_analytics.global.dim_content_questions  AS dim_content_questions
       INNER JOIN analytics_platform.reporting.ai_question_analysis  AS ai_question_analysis ON ai_question_analysis.question_id = dim_content_questions.question_id
       where
@@ -48,6 +49,11 @@ view: fully_solved {
   dimension: gpt4_solved {
     type: number
     sql: ${TABLE}.gpt4_solved ;;
+  }
+
+  dimension: gpt4_turbo_solved {
+    type: number
+    sql: ${TABLE}.gpt4_turbo_solved ;;
   }
 
   set: detail {
