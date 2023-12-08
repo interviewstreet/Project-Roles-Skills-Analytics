@@ -8,6 +8,12 @@ include: "/**/*.view.lkml"                 # include all views in this project
 # # and define the joins that connect them together.
 explore: dim_content_questions {
 
+  join: question_library_mapping {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${dim_content_questions.question_id} = ${question_library_mapping.qid} ;;
+  }
+
   join: ai_question_analysis {
     type: left_outer
     relationship: one_to_many
