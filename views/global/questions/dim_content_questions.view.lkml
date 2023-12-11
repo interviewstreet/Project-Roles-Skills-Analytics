@@ -87,7 +87,7 @@ view: dim_content_questions {
 
   dimension: question_id {
     type: number
-    sql: ${TABLE}.question_id ;;
+    sql: ${TABLE}.question_id;;
   }
 
   dimension: question_internal_notes {
