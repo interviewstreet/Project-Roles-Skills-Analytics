@@ -135,6 +135,14 @@ view: recruit_solves {
     sql: ${TABLE}.updated_at ;;
   }
 
+  measure: question_scores_75th_percentile {
+    type: percentile
+    percentile: 75
+    sql: case when ${score}>0 then ${score}*100.0/cast(${max_score}*1.0 as DOUBLE PRECISION)
+    else 0
+    end;;
+    }
+
   measure: count {
     type: count
     drill_fields: [id]
