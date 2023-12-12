@@ -12,6 +12,11 @@ explore: recruit_tests {
     relationship: one_to_one
     sql_on: ${recruit_tests.owner} = ${recruit_users.id} ;;
   }
+  join: recruit_tests_questions {
+    type: left_outer
+    relationship: one_to_many
+    sql_on:  ${recruit_tests_questions.test_id} = ${recruit_tests.id};;
+  }
 }
 # explore: order_items {
 #   join: orders {
