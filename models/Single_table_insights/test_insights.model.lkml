@@ -17,6 +17,18 @@ explore: recruit_tests {
     relationship: one_to_many
     sql_on:  ${recruit_tests_questions.test_id} = ${recruit_tests.id};;
   }
+
+  join: dim_content_questions {
+    type: left_outer
+    relationship: one_to_one
+    sql_on:  ${recruit_tests_questions.question_id} = ${dim_content_questions.question_id};;
+  }
+
+  join: recruit_test_feedback {
+    type: left_outer
+    relationship: one_to_many
+    sql_on:  ${recruit_tests.unique_id} = ${recruit_test_feedback.test_hash};;
+  }
 }
 # explore: order_items {
 #   join: orders {
