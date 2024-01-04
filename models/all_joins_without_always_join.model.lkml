@@ -54,6 +54,13 @@ case_sensitive: no
     sql_where: ${recruit_tests.draft} = 0
       and ${recruit_tests.state} <> 3 ;;
   }
+
+  join: question_testQuestion_mapping {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${question_testQuestion_mapping.question_id} = ${recruit_tests_questions.question_id} ;;
+  }
+
   # for dev skill report candidate lang tile
   join: tests_with_lang_less_than_6 {
     type: inner
@@ -133,12 +140,6 @@ join: recruit_teams {
     type: left_outer
     relationship: one_to_many
     sql_on: ${recruit_tests_questions.question_id} = ${ai_question_analysis.question_id}  ;;
-  }
-
-  join: dim_content_questions_for_test_questions_mapping {
-    type: inner
-    relationship: many_to_one
-    sql_on: ${dim_content_questions_for_test_questions_mapping.question_id} = ${recruit_tests_questions.question_id} ;;
   }
 
 

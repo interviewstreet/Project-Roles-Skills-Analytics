@@ -1,4 +1,5 @@
 view: dim_content_questions {
+  label: "dim_content_questions"
   sql_table_name: hr_analytics.global.dim_content_questions ;;
 
   dimension: companyid {

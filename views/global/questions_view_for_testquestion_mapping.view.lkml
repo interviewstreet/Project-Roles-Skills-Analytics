@@ -1,4 +1,4 @@
-view: dim_content_questions_for_test_questions_mapping {
+view: questions_view_for_testquestion_mapping {
     sql_table_name: hr_analytics.global.dim_content_questions ;;
 
     dimension: companyid {
@@ -87,7 +87,7 @@ view: dim_content_questions_for_test_questions_mapping {
 
     dimension: question_id {
       type: number
-      sql: ${TABLE}.question_id ;;
+      sql: ${TABLE}.question_id;;
     }
 
     dimension: question_internal_notes {
@@ -97,9 +97,8 @@ view: dim_content_questions_for_test_questions_mapping {
 
     dimension: question_is_leaked {
       type: string
-      sql: ${TABLE}.question_is_leaked;;
+      sql: ${TABLE}.question_is_leaked ;;
     }
-
 
     dimension: question_is_valid {
       type: number
