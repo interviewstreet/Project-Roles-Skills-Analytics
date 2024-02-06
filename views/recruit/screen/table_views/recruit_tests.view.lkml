@@ -115,6 +115,11 @@ view: recruit_tests {
     sql: ${TABLE}.state ;;
   }
 
+  dimension: test_type {
+    type: number
+    sql: ${TABLE}.test_type ;;
+  }
+
   dimension: tags {
     type: string
     sql: ${TABLE}.tags ;;

@@ -28,6 +28,12 @@ case_sensitive: no
     sql_on: ${ever_paid_companies_inc_tcs.company_id} = ${dim_recruit_company_data.company_data_company_id} ;;
   }
 
+  join:  recruit_users_company_mapping{
+      type: left_outer
+      relationship: one_to_many
+      sql_on: ${ever_paid_companies_inc_tcs.company_id} = ${recruit_users_company_mapping.company_id} ;;
+  }
+
   join: recruit_interviews {
     type: inner
     relationship: one_to_many
