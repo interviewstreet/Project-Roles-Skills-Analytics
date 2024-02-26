@@ -1,5 +1,5 @@
 view: fact_rs_roles {
-  sql_table_name:hr_analytics.global.fact_rs_roles ;;
+  sql_table_name:recruit_rs_replica.global.fact_rs_roles ;;
 
   dimension: companyid {
     type: number

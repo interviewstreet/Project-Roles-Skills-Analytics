@@ -1,5 +1,5 @@
 view: fact_recruit_additonal_tag_mapping {
-  sql_table_name:hr_analytics.global.fact_recruit_additonal_tag_mapping ;;
+  sql_table_name:recruit_rs_replica.global.fact_recruit_additonal_tag_mapping ;;
 
   dimension_group: additional_tag_mapping_created {
     type: time
