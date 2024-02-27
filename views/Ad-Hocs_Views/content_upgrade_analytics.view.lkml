@@ -12,7 +12,6 @@ cq.type as question_type,
 json_extract_path_text(cq.stack,'name',TRUE) AS stack,
 json_extract_path_text(cq.type_attributes,'sub_type',TRUE) AS stack_type, -- this value will be set only when a question is upgraded
 cq.created_at, cq.updated_at
-
 from content.questions cq
 INNER JOIN recruit_rs_replica.recruit.recruit_companies rc ON rc.id = json_extract_path_text(cq.custom,'company',TRUE)
 left join recruit_rs_replica.recruit.recruit_solves rs on rs.qid = cq.id
