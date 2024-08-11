@@ -75,12 +75,10 @@ case_sensitive: no
   }
 
   join: recruit_tests_data {
-    type: inner
+    type: left_outer
     relationship: one_to_many
     sql_on: ${recruit_tests.id} = ${recruit_tests_data.tid} ;;
   }
-
-
 
   join: test_user_owner {
     type: inner
@@ -168,6 +166,7 @@ join: recruit_teams {
     and
     ${recruit_test_feedback.user_email} = ${recruit_attempts.email};;
   }
+
   join: recruit_test_candidates {
     type: left_outer
     relationship: one_to_many
@@ -198,10 +197,84 @@ join: recruit_teams {
           and ${recruit_attempts.status} =  7 ;;
   }
 
+
+  join: total_candidate_attempts {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${recruit_attempts.email} = ${total_candidate_attempts.email}
+    and ${recruit_tests.id} =  ${total_candidate_attempts.tid};;
+  }
+
+
+
   join: recruit_attempt_data {
     type: left_outer
     relationship: one_to_many
     sql_on: ${recruit_attempts.id} = ${recruit_attempt_data.aid} ;;
+  }
+
+
+  join: original_max_score {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${recruit_attempts.id} = ${original_max_score.aid}
+    and ${original_max_score.key} = 'original_max_score';;
+  }
+
+  join: out_of_window_events {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${recruit_attempts.id} = ${out_of_window_events.aid}
+        and ${out_of_window_events.key} = 'out_of_window_events';;
+
+  }
+
+  join: out_of_window_duration {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${recruit_attempts.id} = ${out_of_window_duration.aid}
+        and ${out_of_window_duration.key} = 'out_of_window_duration';;
+
+  }
+
+  join: editor_paste_count {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${recruit_attempts.id} = ${editor_paste_count.aid}
+        and ${editor_paste_count.key} = 'editor_paste_count';;
+
+  }
+
+  join: disconnected_time {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${recruit_attempts.id} = ${disconnected_time.aid}
+        and ${disconnected_time.key} = 'disconnected_time';;
+
+  }
+
+  join: enable_advanced_proctoring {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${recruit_attempts.id} = ${enable_advanced_proctoring.aid}
+        and ${enable_advanced_proctoring.key} = 'enable_advanced_proctoring';;
+
+  }
+
+  join: years_experience {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${recruit_attempts.id} = ${years_experience.aid}
+        and ${years_experience.key} = 'years_experience';;
+
+  }
+
+  join: ml_plagiarism_report {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${recruit_attempts.id} = ${ml_plagiarism_report.aid}
+        and ${ml_plagiarism_report.key} = 'ml_plagiarism_report';;
+
   }
 
   join: jpmc_ip_country_mapping {
