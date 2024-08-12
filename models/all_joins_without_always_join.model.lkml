@@ -61,6 +61,14 @@ case_sensitive: no
       and ${recruit_tests.state} <> 3 ;;
   }
 
+  join: test_cutoffs {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${recruit_tests.id} = ${test_cutoffs.tid}
+      and ${test_cutoffs.key} = 'cutoff_score';;
+
+  }
+
   join: question_testQuestion_mapping {
     type: inner
     relationship: one_to_many
@@ -87,7 +95,7 @@ case_sensitive: no
   }
 
   join: test_user_invited_by {
-    type: inner
+    type: left_outer
     relationship: one_to_many
     sql_on: ${test_user_invited_by.id} = abs(${recruit_test_candidates.user_id}) ;;
   }
