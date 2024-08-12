@@ -234,7 +234,6 @@ join: recruit_teams {
     relationship: one_to_many
     sql_on: ${recruit_attempts.id} = ${out_of_window_events.aid}
         and ${out_of_window_events.key} = 'out_of_window_events';;
-
   }
 
   join: out_of_window_duration {
